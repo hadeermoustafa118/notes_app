@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class ColorManager {
   static Color btnColor = const Color(0XFFE7B944);
-  static Color primaryColor = const Color(0XFFDC143C);
+  static Color primaryColor =  Color(0XFFDC143C);
   static Color disabledColor = const Color(0XFF9B9B9B);
   static Color txtColor = const Color(0XFF34283E);
   static Color lightColor = const Color(0XFFFFFFFF);
