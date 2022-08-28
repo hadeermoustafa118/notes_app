@@ -14,7 +14,6 @@ class ColorManager {
     Colors.orange.shade100,
     Colors.blue.shade100,
     Colors.green.shade100,
-    Colors.blueGrey.shade100,
     Colors.yellow.shade100,
   ];
 }

@@ -22,7 +22,7 @@ Future<void> main() async {
     widget = HomeScreen();
   }
   runApp(MyApp(
-    startWidget: widget!,
+    startWidget: widget,
   ));
 }
 

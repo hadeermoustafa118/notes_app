@@ -49,6 +49,7 @@ dev_dependencies:
   firebase_auth: ^3.7.0
   animated_splash_screen: ^1.1.0
   awesome_dialog: ^2.2.1
+  intl: ^0.17.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

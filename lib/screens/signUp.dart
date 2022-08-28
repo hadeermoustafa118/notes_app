@@ -120,6 +120,7 @@ class SignUp extends StatelessWidget {
                                           email: cubit.emailController.text,
                                           password: cubit.passController.text);
                                   debugPrint('$userCredential');
+                                  cubit.addUserData(username: cubit.usernameController.text, mail:  cubit.emailController.text);
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
