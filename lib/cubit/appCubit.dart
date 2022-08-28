@@ -24,8 +24,7 @@ class AppCubit extends Cubit<AppStates> {
 
   //for home screen
   String? userName;
-  var user =
-      FirebaseFirestore.instance.collection('users').get().then((value) => {});
+
   addUserData({required String username, required String mail}) async {
     await FirebaseFirestore.instance
         .collection('users')
@@ -34,13 +33,14 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   int? colorIndex;
+
   addNote({
     required int colorId,
     required String noteContent,
     required String noteDate,
     required String noteTime,
     required String noteTitle,
-
+    required String userId,
   }) async {
     await FirebaseFirestore.instance.collection('flutterNotes').add({
       'color_id': colorId,
@@ -48,7 +48,7 @@ class AppCubit extends Cubit<AppStates> {
       'note_date': noteDate,
       'note_time': noteTime,
       'note_title': noteTitle,
-
+      'user_id': userId
     });
     debugPrint('note added');
   }
@@ -58,7 +58,7 @@ class AppCubit extends Cubit<AppStates> {
     emit(LoadingNotesState());
     CollectionReference notesRef =
         FirebaseFirestore.instance.collection('flutterNotes');
-    await notesRef.get().then((value) {
+    await notesRef.where("user_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid).get().then((value) {
       value.docs.forEach((element) {
         notes.add(element.data());
         debugPrint('${element.data()}');

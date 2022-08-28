@@ -6,6 +6,8 @@ import 'package:notes_app/screens/homeScreen.dart';
 import '../components/myTextField.dart';
 import '../cubit/appCubit.dart';
 import '../cubit/appStates.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../main.dart';
 import '../presentation/colorManager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -156,8 +158,11 @@ class AddNote extends StatelessWidget {
                                             cubit.contentController.text,
                                             noteDate:
                                             cubit.currentDate.toString(),
+                                            userId: FirebaseAuth.instance.currentUser!.uid
+                                            ,
                                             noteTitle:
                                             cubit.titleController.text);
+                                          debugPrint('${FirebaseAuth.instance.currentUser!.uid}');
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
