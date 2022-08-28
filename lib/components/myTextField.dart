@@ -37,6 +37,7 @@ class MyTextField extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: margin),
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: TextFormField(
+
         autofocus: autofocus,
         onTap: onTap as Function(),
         minLines: isMulti ? 4 : 1,

@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notes_app/components/fieldTitle.dart';
-import 'package:notes_app/components/mainButton.dart';
-import 'package:notes_app/screens/homeScreen.dart';
+
+import '../components/fieldTitle.dart';
+import '../components/mainButton.dart';
 import '../components/myTextField.dart';
 import '../cubit/appCubit.dart';
 import '../cubit/appStates.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../main.dart';
 import '../presentation/colorManager.dart';
+import 'homeScreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
-class AddNote extends StatelessWidget {
-  const AddNote({Key? key}) : super(key: key);
-
+class EditNote extends StatelessWidget {
+  const EditNote({
+    Key? key,
+    required this.docId,
+  }) : super(key: key);
+  final String docId;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -43,8 +46,8 @@ class AddNote extends StatelessWidget {
                         SizedBox(
                           height: 16.0.h,
                         ),
-                        Text("New Note! ",
-                            style: GoogleFonts.pacifico(fontSize: 28.0.sp))
+                        Text("Edit Your Note! ",
+                            style: GoogleFonts.pacifico(fontSize: 24.0.sp))
                       ],
                     ),
                   ),
@@ -58,7 +61,7 @@ class AddNote extends StatelessWidget {
                           topRight: Radius.circular(40.0.r))),
                   child: SingleChildScrollView(
                     child: Form(
-                      key: cubit.formKeyNote,
+                      key: cubit.formKeyEditNote,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -72,7 +75,7 @@ class AddNote extends StatelessWidget {
                             ),
                             MyTextField(
                                 hint: '',
-                                controller: cubit.titleController,
+                                controller: cubit.titleEditController,
                                 validatorText: 'This field can not be empty',
                                 icon: Icon(
                                   Icons.title,
@@ -87,7 +90,7 @@ class AddNote extends StatelessWidget {
                             ),
                             MyTextField(
                                 hint: '',
-                                controller: cubit.contentController,
+                                controller: cubit.contentEditController,
                                 validatorText: 'This field can not be empty',
                                 icon: Icon(
                                   Icons.content_paste_rounded,
@@ -128,49 +131,56 @@ class AddNote extends StatelessWidget {
                             ),
                             Center(
                                 child: MainButton(
-                                    btnText: 'Add',
+                                    btnText: 'Save',
                                     press: () {
-                                      if (cubit.formKeyNote.currentState!
+                                      if (cubit.formKeyEditNote.currentState!
                                           .validate()) {
-                                        if(cubit.colorIndex == null){
+                                        if (cubit.colorIndex == null) {
                                           AwesomeDialog(
-                                              body: SizedBox(
-                                                height: 100.h,
-                                                child: Center(
-                                                  child: Text(
-                                                    'please pick the color of the note',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: ColorManager.txtColor,
-                                                        fontSize: 20.sp),
+                                                  body: SizedBox(
+                                                    height: 100.h,
+                                                    child: Center(
+                                                      child: Text(
+                                                        'please pick the color of the note',
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style: TextStyle(
+                                                            color: ColorManager
+                                                                .txtColor,
+                                                            fontSize: 20.sp),
+                                                      ),
+                                                    ),
                                                   ),
-                                                ),
-                                              ),
-                                              context: context,
-                                              dialogType: DialogType.WARNING)
+                                                  context: context,
+                                                  dialogType:
+                                                      DialogType.WARNING)
                                               .show();
-                                        }
-                                        else{  cubit.addNote(
-                                            colorId: cubit.colorIndex!,
-                                            noteTime:
-                                            cubit.currentTime.toString(),
-                                            noteContent:
-                                            cubit.contentController.text,
-                                            noteDate:
-                                            cubit.currentDate.toString(),
-                                            userId: FirebaseAuth.instance.currentUser!.uid
-                                            ,
-                                            noteTitle:
-                                            cubit.titleController.text);
-                                          debugPrint('${FirebaseAuth.instance.currentUser!.uid}');
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                              const HomeScreen()),
-                                        );
-                                        }
+                                        } else {
+                                          debugPrint('from edit $docId');
 
+                                          cubit.editNote(
+                                              colorId: cubit.colorIndex!,
+                                              noteTime: cubit.currentTimeEdit
+                                                  .toString(),
+                                              noteContent: cubit
+                                                  .contentEditController.text,
+                                              noteDate: cubit.currentDateEdit
+                                                  .toString(),
+                                              userId: FirebaseAuth
+                                                  .instance.currentUser!.uid,
+                                              noteTitle: cubit
+                                                  .titleEditController.text,
+                                              docId: docId);
+                                          debugPrint(docId);
+                                          debugPrint(
+                                              '${FirebaseAuth.instance.currentUser!.uid}');
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const HomeScreen()),
+                                          );
+                                        }
                                       }
                                     },
                                     height: 60.h,

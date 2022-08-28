@@ -33,6 +33,7 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   int? colorIndex;
+  int? colorIndexEdit;
 
   addNote({
     required int colorId,
@@ -52,21 +53,46 @@ class AppCubit extends Cubit<AppStates> {
     });
     debugPrint('note added');
   }
-
+  CollectionReference? notesRef;
   List notes = [];
   getData() async {
     emit(LoadingNotesState());
     CollectionReference notesRef =
         FirebaseFirestore.instance.collection('flutterNotes');
-    await notesRef.where("user_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid).get().then((value) {
+    await notesRef
+        .where("user_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
       value.docs.forEach((element) {
         notes.add(element.data());
         debugPrint('${element.data()}');
+        debugPrint('${element.id}');
         emit(SuccessNotesState());
       });
     }).catchError((error) {
       emit(ErrorNotesState());
     });
+  }
+
+  editNote({
+    required int colorId,
+    required String noteContent,
+    required String noteDate,
+    required String noteTime,
+    required String noteTitle,
+    required String userId,
+    required String docId,
+  }) async {
+    await FirebaseFirestore.instance.collection('flutterNotes').doc(docId).update({
+      'color_id': colorId,
+      'note_content': noteContent,
+      'note_date': noteDate,
+      'note_time': noteTime,
+      'note_title': noteTitle,
+      'user_id': userId,
+    }, );
+
+    debugPrint('note updated');
   }
 
   // add note
@@ -101,4 +127,10 @@ class AppCubit extends Cubit<AppStates> {
   var formKeyNote = GlobalKey<FormState>();
   dynamic currentTime = DateFormat.jm().format(DateTime.now());
   dynamic currentDate = DateFormat.yMMMd().format(DateTime.now());
+
+  var titleEditController = TextEditingController();
+  var contentEditController = TextEditingController();
+  var formKeyEditNote = GlobalKey<FormState>();
+  dynamic currentTimeEdit = DateFormat.jm().format(DateTime.now());
+  dynamic currentDateEdit = DateFormat.yMMMd().format(DateTime.now());
 }

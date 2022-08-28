@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:notes_app/components/mainButton.dart';
-import 'package:notes_app/components/noteCard.dart';
 import 'package:notes_app/cubit/appCubit.dart';
 import 'package:notes_app/cubit/appStates.dart';
 import 'package:notes_app/presentation/colorManager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:notes_app/screens/addNote.dart';
-import 'package:notes_app/screens/signUp.dart';
-import '../cubit/appStates.dart';
+import 'package:notes_app/screens/editNote.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:notes_app/screens/noteDetails.dart';
+import '../main.dart';
 import 'login.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,9 +19,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (BuildContext context) => AppCubit()
-
-          ..getData(),
+        create: (BuildContext context) => AppCubit()..getData(),
         child: BlocConsumer<AppCubit, AppStates>(
             listener: (context, state) {},
             builder: (context, state) {
@@ -39,7 +34,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                   centerTitle: true,
                   elevation: 0,
-                  iconTheme: IconThemeData(color: Colors.black),
+                  iconTheme: const IconThemeData(color: Colors.black),
                   backgroundColor: ColorManager.lightColor,
                 ),
                 drawer: Drawer(
@@ -49,44 +44,42 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     children: [
                       DrawerHeader(
-                        decoration: BoxDecoration(
+                        decoration:const BoxDecoration(
                           color: Colors.white,
                         ),
-                        child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: ColorManager.lightColor,
-                                child: Image.asset(
-                                  'assets/images/profile.png',
-                                  height: 100.h,
-                                  width: 100.w,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: ColorManager.lightColor,
+                              radius: 35.0.r,
+                              child:  Image.asset(
+                                'assets/images/profile.png',
+                                height: 100.h,
+                                width: 100.w,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 16.0.w,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Welcome Back ! ',
+                                  style: TextStyle(fontSize: 20.sp),
                                 ),
-                                radius: 35.0.r,
-                              ),
-                              SizedBox(
-                                width: 16.0.w,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Welcome Back ! ',
-                                    style: TextStyle(fontSize: 20.sp),
-                                  ),
-                                  SizedBox(
-                                    height: 8.0.h,
-                                  ),
-                                  // Text(
-                                  //   '${cubit.user!.email}',
-                                  //   style: TextStyle(fontSize: 14.sp),
-                                  // ),
-                                ],
-                              )
-                            ],
-                          ),
+                                SizedBox(
+                                  height: 8.0.h,
+                                ),
+                                // Text(
+                                //   '${cubit.user!.email}',
+                                //   style: TextStyle(fontSize: 14.sp),
+                                // ),
+                              ],
+                            )
+                          ],
                         ),
                       ),
                       Divider(
@@ -95,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                         thickness: 1.0.r,
                       ),
                       ListTile(
-                        title: Text('Language'),
+                        title: const Text('Language'),
                         onTap: () {
                           // Update the state of the app.
                           // ...
@@ -107,7 +100,7 @@ class HomeScreen extends StatelessWidget {
                         thickness: 1.0.r,
                       ),
                       ListTile(
-                        title: Text('Dark Mode'),
+                        title: const Text('Dark Mode'),
                         onTap: () {
                           // Update the state of the app.
                           // ...
@@ -119,7 +112,7 @@ class HomeScreen extends StatelessWidget {
                         thickness: 1.0.r,
                       ),
                       ListTile(
-                        title: Text('LogOut'),
+                        title: const Text('LogOut'),
                         onTap: () async {
                           await FirebaseAuth.instance.signOut();
                           Navigator.pushReplacement(
@@ -148,70 +141,134 @@ class HomeScreen extends StatelessWidget {
                         child: Container(
                           height: 800.h,
                           width: 400.w,
-                          child: ListView.builder(
-                            itemCount: cubit.notes.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  padding: EdgeInsets.all(16.0).r,
-                                  margin: EdgeInsets.all(12.0).r,
-                                  decoration: BoxDecoration(
-                                      color: ColorManager.cardColors[
-                                          cubit.notes[index]['color_id']],
-                                      borderRadius:
-                                          BorderRadius.circular(20.0).r),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        cubit.notes[index]['note_title'],
-                                        style: TextStyle(
-                                            fontSize: 24.sp,
-                                            color: ColorManager.txtColor,
-                                            fontWeight: FontWeight.w500),
-                                        maxLines: 1,
-                                      ),
-                                      SizedBox(
-                                        height: 8.0.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            cubit.notes[index]['note_date'],
-                                            style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: ColorManager.txtColor),
+                          child: FutureBuilder(
+                            future: notesRef
+                                .where("user_id",
+                                    isEqualTo:
+                                        FirebaseAuth.instance.currentUser!.uid)
+                                .get(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.builder(
+                                  itemCount: cubit.notes.length,
+                                  itemBuilder: (context, index) {
+                                    return Dismissible(
+                                      onDismissed: (direction) async{
+                                        notesRef.doc(snapshot.data!.docs[index].id).delete();
+                                      },key: UniqueKey(),
+                                      child: InkWell(
+                                        onTap: () {Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => NoteDetail(notes: cubit.notes[index] ,)),
+                                        );},
+                                        child: Container(
+                                          padding: const EdgeInsets.all(16.0).r,
+                                          margin: const EdgeInsets.all(12.0).r,
+                                          decoration: BoxDecoration(
+                                              color: ColorManager.cardColors[
+                                                  cubit.notes[index]
+                                                      ['color_id']],
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0)
+                                                      .r),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    cubit.notes[index]
+                                                        ['note_title'],
+                                                    style: TextStyle(
+                                                        fontSize: 24.sp,
+                                                        color: ColorManager
+                                                            .txtColor,
+                                                        fontWeight:
+                                                            FontWeight.w500),
+                                                    maxLines: 1,
+                                                  ),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        debugPrint(
+                                                            'from home ${snapshot.data!.docs[index].id}');
+                                                        Navigator.push(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) =>
+                                                                      EditNote(
+                                                                        docId: snapshot
+                                                                            .data!
+                                                                            .docs[index]
+                                                                            .id,
+                                                                      )),
+                                                        );
+                                                      },
+                                                      icon: Icon(
+                                                        Icons
+                                                            .edit_note_outlined,
+                                                        size: 28.r,
+                                                      ))
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 8.0.h,
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    cubit.notes[index]
+                                                        ['note_date'],
+                                                    style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                        color: ColorManager
+                                                            .txtColor),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5.0.w,
+                                                  ),
+                                                  Text(
+                                                    cubit.notes[index]
+                                                        ['note_time'],
+                                                    style: TextStyle(
+                                                        fontSize: 14.sp,
+                                                        color: ColorManager
+                                                            .txtColor),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(
+                                                height: 12.0.h,
+                                              ),
+                                              Text(
+                                                cubit.notes[index]
+                                                    ['note_content'],
+                                                style: TextStyle(
+                                                  fontSize: 18.sp,
+                                                  color: ColorManager.txtColor,
+                                                  fontWeight: FontWeight.w400,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                maxLines: 1,
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: 5.0.w,
-                                          ),
-                                          Text(
-                                            cubit.notes[index]['note_time'],
-                                            style: TextStyle(
-                                                fontSize: 14.sp,
-                                                color: ColorManager.txtColor),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 12.0.h,
-                                      ),
-                                      Text(
-                                        cubit.notes[index]['note_content'],
-                                        style: TextStyle(
-                                          fontSize: 18.sp,
-                                          color: ColorManager.txtColor,
-                                          fontWeight: FontWeight.w400,
-                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                        maxLines: 1,
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              );
+                                    );
+                                  },
+                                );
+                              }
+
+                              return const Center(
+                                  child: CircularProgressIndicator(
+                                color: Colors.red,
+                              ));
                             },
                           ),
                         ),
@@ -219,14 +276,6 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                // floatingActionButton: FloatingActionButton.extended(
-                //   onPressed: () {},
-                //   label: Text(
-                //     'Add Note',
-                //     style: TextStyle(color: ColorManager.lightColor),
-                //   ),
-                //   backgroundColor: ColorManager.primaryColor,
-                // ),
                 bottomSheet: Material(
                   shadowColor: Colors.black,
                   elevation: 10,
@@ -252,13 +301,7 @@ class HomeScreen extends StatelessWidget {
                             },
                             height: 60.h,
                             width: 200.w),
-                        // IconButton(
-                        //     color: Colors.white,
-                        //     onPressed: () {},
-                        //     icon: Icon(
-                        //       Icons.search,
-                        //       color: Colors.black,
-                        //     ))
+
                         SizedBox(
                           width: 14.0.w,
                         ),
