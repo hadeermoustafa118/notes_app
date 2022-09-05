@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../components/circleColor.dart';
 import '../components/fieldTitle.dart';
 import '../components/mainButton.dart';
 import '../components/myTextField.dart';
@@ -119,21 +120,26 @@ class EditNote extends StatelessWidget {
                                 height: 200.h,
                                 width: 300.w,
                                 child: GridView.count(
-                                    crossAxisCount: 3,
-                                    children: List.generate(
-                                      ColorManager.cardColors.length,
-                                      (index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            cubit.colorIndex = index;
-                                            debugPrint('${cubit.colorIndex}');
-                                          },
-                                          child: Center(
-                                            child: cubit.circels[index],
-                                          ),
-                                        );
-                                      },
-                                    ),),
+                                  crossAxisCount: 3,
+                                  children: List.generate(
+                                    ColorManager.cardColors.length,
+                                    (index) {
+                                      return InkWell(
+                                        onTap: () {
+                                          cubit.colorIndex = index;
+                                          cubit.changeTabVale();
+                                          debugPrint('${cubit.colorIndex}');
+                                        },
+                                        child: Center(
+                                          child: CircleColor(
+                                              tab: cubit.tab,
+                                              bgColor: ColorManager
+                                                  .cardColors[index]),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
                               ),
                             ),
                             SizedBox(
@@ -151,13 +157,13 @@ class EditNote extends StatelessWidget {
                                             noteTime: cubit.currentTimeEdit
                                                 .toString(),
                                             noteContent:
-                                               cubit.content ?? 'no content',
+                                                cubit.content ?? 'no content',
                                             noteDate: cubit.currentDateEdit
                                                 .toString(),
                                             userId: FirebaseAuth
                                                 .instance.currentUser!.uid,
                                             noteTitle:
-                                              cubit.title ?? 'no title',
+                                                cubit.title ?? 'no title',
                                             docId: docId);
                                         Navigator.pushReplacement(
                                           context,

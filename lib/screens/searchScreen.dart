@@ -3,14 +3,8 @@ import 'package:notes_app/components/myTextField.dart';
 import 'package:notes_app/cubit/appCubit.dart';
 import 'package:notes_app/cubit/appStates.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:firestore_search/firestore_search.dart';
-
-import '../main.dart';
-import '../models/dataModel.dart';
 import '../presentation/colorManager.dart';
-import 'editNote.dart';
 import 'noteDetails.dart';
 
 class SearchScreen extends StatelessWidget {

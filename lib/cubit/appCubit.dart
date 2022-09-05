@@ -134,12 +134,15 @@ class AppCubit extends Cubit<AppStates> {
       radius: 35.r,
     ),
   ];
+
+  // add note controllers
   var titleController = TextEditingController();
   var contentController = TextEditingController();
   var formKeyNote = GlobalKey<FormState>();
   dynamic currentTime = DateFormat.jm().format(DateTime.now());
   dynamic currentDate = DateFormat.yMMMd().format(DateTime.now());
 
+//edit controllers
   var titleEditController = TextEditingController();
   var contentEditController = TextEditingController();
   var formKeyEditNote = GlobalKey<FormState>();
@@ -150,7 +153,7 @@ class AppCubit extends Cubit<AppStates> {
 
   List notesResult = [];
   var searchController = TextEditingController();
-  String? tit;
+  String? noteTitle;
   searchByTitle() async {
     emit(LoadingSearchState());
     CollectionReference notesRef =
@@ -161,14 +164,10 @@ class AppCubit extends Cubit<AppStates> {
         .then((value) {
           notesResult=[];
       value.docs.forEach((element) {
-        tit = element.get('note_title');
-        if (tit!.contains(searchController.text)){
+        noteTitle = element.get('note_title');
+        if (noteTitle!.contains(searchController.text)){
           notesResult.add(element.data());
-
-          // debugPrint('${element.data()}');
-          //  debugPrint('${element.id}');
         }
-      debugPrint(' search after ${notesResult}');
         emit(SuccessSearchState());
       });
     }).catchError((error) {
@@ -178,5 +177,9 @@ class AppCubit extends Cubit<AppStates> {
 
   String? title;
   String? content;
-  int? color;
+bool tab = false;
+void changeTabVale (){
+  tab = !tab;
+  emit(ChangeTabVale());
+}
 }

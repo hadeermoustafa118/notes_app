@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/components/circleColor.dart';
 import 'package:notes_app/components/fieldTitle.dart';
 import 'package:notes_app/components/mainButton.dart';
 import 'package:notes_app/screens/homeScreen.dart';
@@ -70,7 +71,8 @@ class AddNote extends StatelessWidget {
                             const FieldTitle(
                               text: 'Note Title',
                             ),
-                            MyTextField( submit: (value){},
+                            MyTextField(
+                                submit: (value) {},
                                 hint: '',
                                 controller: cubit.titleController,
                                 validatorText: 'This field can not be empty',
@@ -86,7 +88,7 @@ class AddNote extends StatelessWidget {
                               text: 'Note Content',
                             ),
                             MyTextField(
-                              submit: (value){},
+                                submit: (value) {},
                                 hint: '',
                                 controller: cubit.contentController,
                                 validatorText: 'This field can not be empty',
@@ -114,10 +116,14 @@ class AddNote extends StatelessWidget {
                                         return InkWell(
                                           onTap: () {
                                             cubit.colorIndex = index;
+                                            cubit.changeTabVale();
                                             debugPrint('${cubit.colorIndex}');
                                           },
                                           child: Center(
-                                            child: cubit.circels[index],
+                                            child: CircleColor(
+                                                tab: cubit.tab,
+                                                bgColor: ColorManager
+                                                    .cardColors[index]),
                                           ),
                                         );
                                       },
@@ -136,26 +142,25 @@ class AddNote extends StatelessWidget {
                                         cubit.addNote(
                                             colorId: cubit.colorIndex ?? 2,
                                             noteTime:
-                                            cubit.currentTime.toString(),
+                                                cubit.currentTime.toString(),
                                             noteContent:
-                                            cubit.contentController.text,
+                                                cubit.contentController.text,
                                             noteDate:
-                                            cubit.currentDate.toString(),
-                                            userId: FirebaseAuth.instance.currentUser!.uid
-                                            ,
+                                                cubit.currentDate.toString(),
+                                            userId: FirebaseAuth
+                                                .instance.currentUser!.uid,
                                             noteTitle:
-                                            cubit.titleController.text);
-                                          debugPrint('${FirebaseAuth.instance.currentUser!.uid}');
+                                                cubit.titleController.text);
+                                        debugPrint(
+                                            '${FirebaseAuth.instance.currentUser!.uid}');
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                              const HomeScreen()),
+                                                  const HomeScreen()),
                                         );
-                                        }
-
                                       }
-                                    ,
+                                    },
                                     height: 60.h,
                                     width: 200.w)),
                           ],

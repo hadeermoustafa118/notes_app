@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.zero,
                     children: [
                       DrawerHeader(
-                        decoration:const BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                         ),
                         child: Row(
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                             CircleAvatar(
                               backgroundColor: ColorManager.lightColor,
                               radius: 35.0.r,
-                              child:  Image.asset(
+                              child: Image.asset(
                                 'assets/images/profile.png',
                                 height: 100.h,
                                 width: 100.w,
@@ -154,14 +154,35 @@ class HomeScreen extends StatelessWidget {
                                   itemCount: cubit.notes.length,
                                   itemBuilder: (context, index) {
                                     return Dismissible(
-                                      onDismissed: (direction) async{
-                                        notesRef.doc(snapshot.data!.docs[index].id).delete();
-                                      },key: UniqueKey(),
+                                      background: Container(
+                                        padding: const EdgeInsets.all(16.0).r,
+                                        margin: const EdgeInsets.all(12.0).r,
+                                        decoration: BoxDecoration(
+                                            color: Colors.red,
+                                            borderRadius:
+                                                BorderRadius.circular(20.0).r),
+                                        child: Icon(
+                                          Icons.delete_forever,
+                                          color: ColorManager.lightColor,
+                                        ),
+                                      ),
+                                      onDismissed: (direction) async {
+                                        notesRef
+                                            .doc(snapshot.data!.docs[index].id)
+                                            .delete();
+                                      },
+                                      key: UniqueKey(),
                                       child: InkWell(
-                                        onTap: () {Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) => NoteDetail(notes: cubit.notes[index] ,)),
-                                        );},
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NoteDetail(
+                                                      notes: cubit.notes[index],
+                                                    )),
+                                          );
+                                        },
                                         child: Container(
                                           padding: const EdgeInsets.all(16.0).r,
                                           margin: const EdgeInsets.all(12.0).r,
@@ -201,12 +222,15 @@ class HomeScreen extends StatelessWidget {
                                                           MaterialPageRoute(
                                                               builder:
                                                                   (context) =>
-                                                                      EditNote(index: index,
+                                                                      EditNote(
+                                                                        index:
+                                                                            index,
                                                                         docId: snapshot
                                                                             .data!
                                                                             .docs[index]
                                                                             .id,
-                                                                        noteList: cubit.notes,
+                                                                        noteList:
+                                                                            cubit.notes,
                                                                       )),
                                                         );
                                                       },
@@ -303,16 +327,17 @@ class HomeScreen extends StatelessWidget {
                             },
                             height: 60.h,
                             width: 200.w),
-
                         SizedBox(
                           width: 14.0.w,
                         ),
                         FloatingActionButton(
-                          onPressed: () {Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const SearchScreen()),
-                          );},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SearchScreen()),
+                            );
+                          },
                           child: Icon(
                             Icons.search,
                             color: Colors.black,
