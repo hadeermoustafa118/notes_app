@@ -74,7 +74,7 @@ class Login extends StatelessWidget {
                         SizedBox(
                           height: 20.0.h,
                         ),
-                        MyTextField(
+                        MyTextField( submit: (value){},
                             hint: 'enter your e-mail',
                             controller: cubit.emailForLoginController,
                             validatorText: 'This field can not be empty',
@@ -86,7 +86,7 @@ class Login extends StatelessWidget {
                         SizedBox(
                           height: 15.0.h,
                         ),
-                        MyTextField(
+                        MyTextField( submit: (value){},
                             hint: 'enter your password',
                             controller: cubit.passForLoginController,
                             validatorText: 'This field can not be empty',

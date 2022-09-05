@@ -150,20 +150,25 @@ class AppCubit extends Cubit<AppStates> {
 
   List notesResult = [];
   var searchController = TextEditingController();
-
+  String? tit;
   searchByTitle() async {
     emit(LoadingSearchState());
     CollectionReference notesRef =
         FirebaseFirestore.instance.collection('flutterNotes');
     await notesRef
         .where("user_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-
         .get()
         .then((value) {
+          notesResult=[];
       value.docs.forEach((element) {
-        notesResult.add(element.data());
-        debugPrint('${element.data()}');
-        debugPrint('${element.id}');
+        tit = element.get('note_title');
+        if (tit!.contains(searchController.text)){
+          notesResult.add(element.data());
+
+          // debugPrint('${element.data()}');
+          //  debugPrint('${element.id}');
+        }
+      debugPrint(' search after ${notesResult}');
         emit(SuccessSearchState());
       });
     }).catchError((error) {

@@ -12,7 +12,7 @@ class TextFieldForEdit extends StatelessWidget {
     required this.onTap,
     this.padding = 30.0,
     this.margin = 10.0,
-//required this.save,
+required this.save,
     required this.init
   }) : super(key: key);
  // final TextEditingController controller;
@@ -28,6 +28,7 @@ class TextFieldForEdit extends StatelessWidget {
   final double padding;
   final double margin;
 //final VoidCallback save;
+  final void Function(String?)? save;
 final String init;
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,7 @@ final String init;
       margin: EdgeInsets.symmetric(vertical: margin),
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: TextFormField(
-     //   onSaved: ()=> save,
+       onChanged: save,
         autofocus: autofocus,
         onTap: onTap as Function(),
         minLines: isMulti ? 4 : 1,

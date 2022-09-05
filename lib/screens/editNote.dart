@@ -31,11 +31,6 @@ class EditNote extends StatelessWidget {
             listener: (context, state) {},
             builder: (context, state) {
               var cubit = AppCubit.get(context);
-              // final controllerT = TextEditingController(
-              //     text: '${noteList[index]['note_title']}');
-              // final controllerC = TextEditingController(
-              //     text: '${noteList[index]['note_content']}');
-
               return Scaffold(
                 body: SafeArea(
                   child: Padding(
@@ -83,12 +78,11 @@ class EditNote extends StatelessWidget {
                               text: 'Note Title',
                             ),
                             TextFieldForEdit(
+                                save: (text) {
+                                  cubit.title = text!;
+                                },
                                 hint: '',
                                 init: '${noteList[index]['note_title']}',
-                                // save: (val){
-                                //   cubit.title = val;
-                                // },
-                               // controller: controllerT,
                                 validatorText: 'This field can not be empty',
                                 icon: Icon(
                                   Icons.title,
@@ -103,20 +97,16 @@ class EditNote extends StatelessWidget {
                             ),
                             TextFieldForEdit(
                                 init: '${noteList[index]['note_content']}',
-
                                 hint: '',
-                               // save: (){
-                               //
-                               // }
-                               // controller: controllerC,
+                                save: (text) {
+                                  cubit.content = text!;
+                                },
                                 validatorText: 'This field can not be empty',
                                 icon: Icon(
                                   Icons.content_paste_rounded,
                                   color: ColorManager.lightColor,
                                 ),
-                                onTap: () {
-
-                                }),
+                                onTap: () {}),
                             SizedBox(
                               height: 15.0.h,
                             ),
@@ -143,7 +133,7 @@ class EditNote extends StatelessWidget {
                                           ),
                                         );
                                       },
-                                    )),
+                                    ),),
                               ),
                             ),
                             SizedBox(
@@ -155,24 +145,20 @@ class EditNote extends StatelessWidget {
                                     press: () {
                                       if (cubit.formKeyEditNote.currentState!
                                           .validate()) {
-                                        debugPrint('from edit $docId');
-
                                         cubit.editNote(
-                                            colorId: cubit.colorIndex?? noteList[index]['color_id'],
+                                            colorId: cubit.colorIndex ??
+                                                noteList[index]['color_id'],
                                             noteTime: cubit.currentTimeEdit
                                                 .toString(),
-                                            noteContent: cubit
-                                                .content??'no content',
+                                            noteContent:
+                                               cubit.content ?? 'no content',
                                             noteDate: cubit.currentDateEdit
                                                 .toString(),
                                             userId: FirebaseAuth
                                                 .instance.currentUser!.uid,
                                             noteTitle:
-                                                cubit.title?? 'no titile',
+                                              cubit.title ?? 'no title',
                                             docId: docId);
-                                        debugPrint(docId);
-                                        debugPrint(
-                                            '${FirebaseAuth.instance.currentUser!.uid}');
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(

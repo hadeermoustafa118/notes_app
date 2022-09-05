@@ -70,7 +70,7 @@ class AddNote extends StatelessWidget {
                             const FieldTitle(
                               text: 'Note Title',
                             ),
-                            MyTextField(
+                            MyTextField( submit: (value){},
                                 hint: '',
                                 controller: cubit.titleController,
                                 validatorText: 'This field can not be empty',
@@ -86,6 +86,7 @@ class AddNote extends StatelessWidget {
                               text: 'Note Content',
                             ),
                             MyTextField(
+                              submit: (value){},
                                 hint: '',
                                 controller: cubit.contentController,
                                 validatorText: 'This field can not be empty',

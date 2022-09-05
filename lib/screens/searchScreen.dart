@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/components/myTextField.dart';
 import 'package:notes_app/cubit/appCubit.dart';
 import 'package:notes_app/cubit/appStates.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,69 +29,64 @@ class SearchScreen extends StatelessWidget {
                   child: SafeArea(
                     child: Column(
                       children: [
-                        FirestoreSearchBar(
-                          tag: 'example',
-                        ),
-                        Container(
-                          height: 820.h,
-                          width: 410.w,
-                          child: FirestoreSearchResults.builder(
-                            initialBody: const Center(child: Text('Search to find notes'),),
-                            tag: 'example',
-                            dataListFromSnapshot:
-                                DataModel().dataListFromSnapshot,
-                            firestoreCollectionName: 'flutterNotes',
-                            searchBy: 'note_title',
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                final List<DataModel>? dataList = snapshot.data;
-                                if (dataList!.isEmpty) {
-                                  return const Center(
-                                    child: Text('No Results Returned' , style: TextStyle(color: Colors.black),),
-                                  );
-                                }
-                                return
-                                   ListView.builder(
-                                      itemCount: dataList.length,
-                                      itemBuilder: (context, index) {
-                                        final DataModel data = dataList[index];
-
-                                        return InkWell(
-                                          onTap: () {Navigator.push(
-                                            context,
-                                            MaterialPageRoute(builder: (context) => NoteDetail(notes: cubit.notes[index] ,)),
-                                          );},
+                        MyTextField(
+                          txtColor: Colors.black,
+                          submit: (text){
+                            cubit.searchController.text= text;
+                            cubit.searchByTitle();
+                          },
+                            enable: Colors.black,
+                            focus: Colors.black,
+                            hintStyle: Colors.grey,
+                            hint: 'which note you are looking for ?',
+                            controller: cubit.searchController,
+                            validatorText: 'enter something to search for ',
+                            icon: Icon(Icons.search),
+                            onTap: () {}),
+                        if(cubit.notesResult.isNotEmpty)
+                          SizedBox(
+                          height: 800.h,
+                          width: 400.w,
+                          child: ListView.builder(
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      NoteDetail(
+                                                        notes: cubit
+                                                            .notesResult[index],
+                                                      )),
+                                            );
+                                          },
                                           child: Container(
-                                            padding: const EdgeInsets.all(16.0).r,
-                                            margin: const EdgeInsets.all(12.0).r,
+                                            padding:
+                                                const EdgeInsets.all(16.0).r,
+                                            margin:
+                                                const EdgeInsets.all(12.0).r,
                                             decoration: BoxDecoration(
                                                 color: ColorManager.cardColors[
-                                               data.id!
-                                                  ],
+                                                    cubit.notesResult[index]
+                                                        ['color_id']],
                                                 borderRadius:
-                                                BorderRadius.circular(20.0)
-                                                    .r),
+                                                    BorderRadius.circular(20.0)
+                                                        .r),
                                             child: Column(
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                     '${data.title}',
-                                                      style: TextStyle(
-                                                          fontSize: 24.sp,
-                                                          color: ColorManager
-                                                              .txtColor,
-                                                          fontWeight:
+                                                Text(
+                                                  cubit.notesResult[index]
+                                                      ['note_title'],
+                                                  style: TextStyle(
+                                                      fontSize: 24.sp,
+                                                      color:
+                                                          ColorManager.txtColor,
+                                                      fontWeight:
                                                           FontWeight.w500),
-                                                      maxLines: 1,
-                                                    ),
-
-                                                  ],
+                                                  maxLines: 1,
                                                 ),
                                                 SizedBox(
                                                   height: 8.0.h,
@@ -98,8 +94,8 @@ class SearchScreen extends StatelessWidget {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      cubit.notes[index]
-                                                      ['note_date'],
+                                                      cubit.notesResult[index]
+                                                          ['note_date'],
                                                       style: TextStyle(
                                                           fontSize: 14.sp,
                                                           color: ColorManager
@@ -109,8 +105,8 @@ class SearchScreen extends StatelessWidget {
                                                       width: 5.0.w,
                                                     ),
                                                     Text(
-                                                      cubit.notes[index]
-                                                      ['note_time'],
+                                                      cubit.notesResult[index]
+                                                          ['note_time'],
                                                       style: TextStyle(
                                                           fontSize: 14.sp,
                                                           color: ColorManager
@@ -122,13 +118,15 @@ class SearchScreen extends StatelessWidget {
                                                   height: 12.0.h,
                                                 ),
                                                 Text(
-                                                  '${data.content}',
+                                                  cubit.notesResult[index]
+                                                      ['note_content'],
                                                   style: TextStyle(
                                                     fontSize: 18.sp,
-                                                    color: ColorManager.txtColor,
+                                                    color:
+                                                        ColorManager.txtColor,
                                                     fontWeight: FontWeight.w400,
                                                     overflow:
-                                                    TextOverflow.ellipsis,
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                   maxLines: 1,
                                                 ),
@@ -136,129 +134,21 @@ class SearchScreen extends StatelessWidget {
                                             ),
                                           ),
                                         );
-                                      }
-                                );
-                              }
+                                },
+                                itemCount: cubit.notesResult.length,
+                              )
 
-                              if (snapshot.connectionState == ConnectionState.done) {
-                                if (!snapshot.hasData) {
-                                  return const Center(
-                                    child: Text('No Results Returned'),
-                                  );
-                                }
-                              }
-                              return const Center(
-                                child: CircularProgressIndicator(color: Colors.red,),
-                              );
-                            },
-                          ),
                         )
-                        // Container(
-                        //   height: 400.h,
-                        //   width: 400.w,
-                        //   child: FutureBuilder(
-                        //     future: notesRef
-                        //         .where("user_id",
-                        //             isEqualTo:
-                        //                 FirebaseAuth.instance.currentUser!.uid)
-                        //         .get(),
-                        //     builder: (context, snapshot) {
-                        //       return ListView.builder(
-                        //         itemBuilder: (context, index) {
-                        //           return cubit.searchController.text
-                        //                       .toLowerCase() ==
-                        //                   cubit.notes[index]['note_title']
-                        //                       .toString()
-                        //                       .toLowerCase()
-                        //               ? InkWell(
-                        //                   onTap: () {
-                        //                     Navigator.push(
-                        //                       context,
-                        //                       MaterialPageRoute(
-                        //                           builder: (context) =>
-                        //                               NoteDetail(
-                        //                                 notes: cubit
-                        //                                     .notesResult[index],
-                        //                               )),
-                        //                     );
-                        //                   },
-                        //                   child: Container(
-                        //                     padding: const EdgeInsets.all(16.0).r,
-                        //                     margin: const EdgeInsets.all(12.0).r,
-                        //                     decoration: BoxDecoration(
-                        //                         color: ColorManager.cardColors[
-                        //                             cubit.notesResult[index]
-                        //                                 ['color_id']],
-                        //                         borderRadius:
-                        //                             BorderRadius.circular(20.0)
-                        //                                 .r),
-                        //                     child: Column(
-                        //                       crossAxisAlignment:
-                        //                           CrossAxisAlignment.start,
-                        //                       children: [
-                        //                         Text(
-                        //                           cubit.notesResult[index]
-                        //                               ['note_title'],
-                        //                           style: TextStyle(
-                        //                               fontSize: 24.sp,
-                        //                               color:
-                        //                                   ColorManager.txtColor,
-                        //                               fontWeight:
-                        //                                   FontWeight.w500),
-                        //                           maxLines: 1,
-                        //                         ),
-                        //                         SizedBox(
-                        //                           height: 8.0.h,
-                        //                         ),
-                        //                         Row(
-                        //                           children: [
-                        //                             Text(
-                        //                               cubit.notesResult[index]
-                        //                                   ['note_date'],
-                        //                               style: TextStyle(
-                        //                                   fontSize: 14.sp,
-                        //                                   color: ColorManager
-                        //                                       .txtColor),
-                        //                             ),
-                        //                             SizedBox(
-                        //                               width: 5.0.w,
-                        //                             ),
-                        //                             Text(
-                        //                               cubit.notesResult[index]
-                        //                                   ['note_time'],
-                        //                               style: TextStyle(
-                        //                                   fontSize: 14.sp,
-                        //                                   color: ColorManager
-                        //                                       .txtColor),
-                        //                             ),
-                        //                           ],
-                        //                         ),
-                        //                         SizedBox(
-                        //                           height: 12.0.h,
-                        //                         ),
-                        //                         Text(
-                        //                           cubit.notesResult[index]
-                        //                               ['note_content'],
-                        //                           style: TextStyle(
-                        //                             fontSize: 18.sp,
-                        //                             color: ColorManager.txtColor,
-                        //                             fontWeight: FontWeight.w400,
-                        //                             overflow:
-                        //                                 TextOverflow.ellipsis,
-                        //                           ),
-                        //                           maxLines: 1,
-                        //                         ),
-                        //                       ],
-                        //                     ),
-                        //                   ),
-                        //                 )
-                        //               : Text('no data');
-                        //         },
-                        //         itemCount: cubit.notesResult.length,
-                        //       );
-                        //     },
-                        //   ),
-                        // ),
+                        else
+                           Container(height: 500.h,
+                             child: Column(
+                               mainAxisAlignment: MainAxisAlignment.center,
+                               crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('No Notes Found', style: TextStyle(color: ColorManager.txtColor, fontSize: 20.sp),),
+                              ],
+                          ),
+                           ),
                       ],
                     ),
                   ),
