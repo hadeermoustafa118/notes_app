@@ -124,19 +124,19 @@ class EditNote extends StatelessWidget {
                                   children: List.generate(
                                     ColorManager.cardColors.length,
                                     (index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          cubit.colorIndex = index;
-                                          cubit.changeTabVale();
-                                          debugPrint('${cubit.colorIndex}');
-                                        },
-                                        child: Center(
-                                          child: CircleColor(
-                                              tab: cubit.tab,
-                                              bgColor: ColorManager
-                                                  .cardColors[index]),
-                                        ),
-                                      );
+                                      return  InkWell(
+                                          onTap: (){
+                                            cubit.colorIndex = index;
+                                            cubit.changeTabVale(index);
+                                          },
+                                          child: Center(
+                                            child: CircleColor(
+                                                child: cubit.widget!,
+                                                bgColor: ColorManager
+                                                    .cardColors[index]),
+                                          ),
+                                        );
+
                                     },
                                   ),
                                 ),

@@ -114,16 +114,15 @@ class AddNote extends StatelessWidget {
                                       ColorManager.cardColors.length,
                                       (index) {
                                         return InkWell(
-                                          onTap: () {
+                                          onTap: (){
                                             cubit.colorIndex = index;
-                                            cubit.changeTabVale();
-                                            debugPrint('${cubit.colorIndex}');
+                                            cubit.changeTabVale(index);
                                           },
                                           child: Center(
                                             child: CircleColor(
-                                                tab: cubit.tab,
-                                                bgColor: ColorManager
-                                                    .cardColors[index]),
+                                              bgColor: ColorManager
+                                                    .cardColors[index],
+                                              child: cubit.taby[index] ? Icon(Icons.done, color: ColorManager.txtColor,):Container()),
                                           ),
                                         );
                                       },

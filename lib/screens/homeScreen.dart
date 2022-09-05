@@ -41,7 +41,6 @@ class HomeScreen extends StatelessWidget {
                 drawer: Drawer(
                   backgroundColor: ColorManager.lightColor,
                   child: ListView(
-                    // Important: Remove any padding from the ListView.
                     padding: EdgeInsets.zero,
                     children: [
                       DrawerHeader(
@@ -74,10 +73,7 @@ class HomeScreen extends StatelessWidget {
                                 SizedBox(
                                   height: 8.0.h,
                                 ),
-                                // Text(
-                                //   '${cubit.user!.email}',
-                                //   style: TextStyle(fontSize: 14.sp),
-                                // ),
+
                               ],
                             )
                           ],
@@ -103,8 +99,7 @@ class HomeScreen extends StatelessWidget {
                       ListTile(
                         title: const Text('Dark Mode'),
                         onTap: () {
-                          // Update the state of the app.
-                          // ...
+                         cubit.changeMode();
                         },
                       ),
                       Divider(

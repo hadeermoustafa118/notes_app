@@ -7,3 +7,4 @@ class LoadingSearchState extends AppStates{}
 class SuccessSearchState extends AppStates{}
 class ErrorSearchState extends AppStates{}
 class ChangeTabVale extends AppStates{}
+class ChangeModeState extends AppStates{}

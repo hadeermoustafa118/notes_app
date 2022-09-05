@@ -34,7 +34,6 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   int? colorIndex;
-  int? colorIndexEdit;
 //add note
 
   addNote({
@@ -106,35 +105,6 @@ class AppCubit extends Cubit<AppStates> {
     debugPrint('note updated');
   }
 
-  // add note form attributes
-
-  List<Widget> circels = [
-    CircleAvatar(
-      backgroundColor: ColorManager.cardColors[0],
-      radius: 35.r,
-    ),
-    CircleAvatar(
-      backgroundColor: ColorManager.cardColors[1],
-      radius: 35.r,
-    ),
-    CircleAvatar(
-      backgroundColor: ColorManager.cardColors[2],
-      radius: 35.r,
-    ),
-    CircleAvatar(
-      backgroundColor: ColorManager.cardColors[3],
-      radius: 35.r,
-    ),
-    CircleAvatar(
-      backgroundColor: ColorManager.cardColors[4],
-      radius: 35.r,
-    ),
-    CircleAvatar(
-      backgroundColor: ColorManager.cardColors[5],
-      radius: 35.r,
-    ),
-  ];
-
   // add note controllers
   var titleController = TextEditingController();
   var contentController = TextEditingController();
@@ -162,10 +132,10 @@ class AppCubit extends Cubit<AppStates> {
         .where("user_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
-          notesResult=[];
+      notesResult = [];
       value.docs.forEach((element) {
         noteTitle = element.get('note_title');
-        if (noteTitle!.contains(searchController.text)){
+        if (noteTitle!.contains(searchController.text)) {
           notesResult.add(element.data());
         }
         emit(SuccessSearchState());
@@ -174,12 +144,23 @@ class AppCubit extends Cubit<AppStates> {
       emit(ErrorSearchState());
     });
   }
-
+List<bool> taby=[false, false , false , false, false, false];
   String? title;
   String? content;
-bool tab = false;
-void changeTabVale (){
-  tab = !tab;
-  emit(ChangeTabVale());
-}
+  bool tab = false;
+  Widget widget = Container();
+  void changeTabVale(index) {
+    for(int i =0; i< taby.length;i++){
+      taby[i] = false;
+    }
+    taby[index] = !taby[index];    debugPrint('${taby}');
+    emit(ChangeTabVale());
+  }
+
+// switch mode
+  bool isDark = false;
+  void changeMode() {
+    isDark = !isDark;
+    emit(ChangeModeState());
+  }
 }
