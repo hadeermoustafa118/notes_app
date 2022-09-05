@@ -25,6 +25,7 @@ class AppCubit extends Cubit<AppStates> {
   //for home screen
   String? userName;
 
+// add user
   addUserData({required String username, required String mail}) async {
     await FirebaseFirestore.instance
         .collection('users')
@@ -34,6 +35,7 @@ class AppCubit extends Cubit<AppStates> {
 
   int? colorIndex;
   int? colorIndexEdit;
+//add note
 
   addNote({
     required int colorId,
@@ -53,7 +55,9 @@ class AppCubit extends Cubit<AppStates> {
     });
     debugPrint('note added');
   }
-  CollectionReference? notesRef;
+
+  //get note
+
   List notes = [];
   getData() async {
     emit(LoadingNotesState());
@@ -74,6 +78,8 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  //edit note
+
   editNote({
     required int colorId,
     required String noteContent,
@@ -83,19 +89,25 @@ class AppCubit extends Cubit<AppStates> {
     required String userId,
     required String docId,
   }) async {
-    await FirebaseFirestore.instance.collection('flutterNotes').doc(docId).update({
-      'color_id': colorId,
-      'note_content': noteContent,
-      'note_date': noteDate,
-      'note_time': noteTime,
-      'note_title': noteTitle,
-      'user_id': userId,
-    }, );
+    await FirebaseFirestore.instance
+        .collection('flutterNotes')
+        .doc(docId)
+        .update(
+      {
+        'color_id': colorId,
+        'note_content': noteContent,
+        'note_date': noteDate,
+        'note_time': noteTime,
+        'note_title': noteTitle,
+        'user_id': userId,
+      },
+    );
 
     debugPrint('note updated');
   }
 
-  // add note
+  // add note form attributes
+
   List<Widget> circels = [
     CircleAvatar(
       backgroundColor: ColorManager.cardColors[0],
@@ -133,4 +145,33 @@ class AppCubit extends Cubit<AppStates> {
   var formKeyEditNote = GlobalKey<FormState>();
   dynamic currentTimeEdit = DateFormat.jm().format(DateTime.now());
   dynamic currentDateEdit = DateFormat.yMMMd().format(DateTime.now());
+
+  // search
+
+  List notesResult = [];
+  var searchController = TextEditingController();
+
+  searchByTitle() async {
+    emit(LoadingSearchState());
+    CollectionReference notesRef =
+        FirebaseFirestore.instance.collection('flutterNotes');
+    await notesRef
+        .where("user_id", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+
+        .get()
+        .then((value) {
+      value.docs.forEach((element) {
+        notesResult.add(element.data());
+        debugPrint('${element.data()}');
+        debugPrint('${element.id}');
+        emit(SuccessSearchState());
+      });
+    }).catchError((error) {
+      emit(ErrorSearchState());
+    });
+  }
+
+  String? title;
+  String? content;
+  int? color;
 }

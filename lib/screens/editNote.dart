@@ -5,20 +5,24 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../components/fieldTitle.dart';
 import '../components/mainButton.dart';
 import '../components/myTextField.dart';
+import '../components/textFieldForEdit.dart';
 import '../cubit/appCubit.dart';
 import '../cubit/appStates.dart';
 import '../presentation/colorManager.dart';
 import 'homeScreen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 
 class EditNote extends StatelessWidget {
-  const EditNote({
-    Key? key,
-    required this.docId,
-  }) : super(key: key);
+  const EditNote(
+      {Key? key,
+      required this.docId,
+      required this.noteList,
+      required this.index})
+      : super(key: key);
   final String docId;
+  final noteList;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -27,6 +31,11 @@ class EditNote extends StatelessWidget {
             listener: (context, state) {},
             builder: (context, state) {
               var cubit = AppCubit.get(context);
+              // final controllerT = TextEditingController(
+              //     text: '${noteList[index]['note_title']}');
+              // final controllerC = TextEditingController(
+              //     text: '${noteList[index]['note_content']}');
+
               return Scaffold(
                 body: SafeArea(
                   child: Padding(
@@ -73,9 +82,13 @@ class EditNote extends StatelessWidget {
                             const FieldTitle(
                               text: 'Note Title',
                             ),
-                            MyTextField(
+                            TextFieldForEdit(
                                 hint: '',
-                                controller: cubit.titleEditController,
+                                init: '${noteList[index]['note_title']}',
+                                // save: (val){
+                                //   cubit.title = val;
+                                // },
+                               // controller: controllerT,
                                 validatorText: 'This field can not be empty',
                                 icon: Icon(
                                   Icons.title,
@@ -88,15 +101,22 @@ class EditNote extends StatelessWidget {
                             const FieldTitle(
                               text: 'Note Content',
                             ),
-                            MyTextField(
+                            TextFieldForEdit(
+                                init: '${noteList[index]['note_content']}',
+
                                 hint: '',
-                                controller: cubit.contentEditController,
+                               // save: (){
+                               //
+                               // }
+                               // controller: controllerC,
                                 validatorText: 'This field can not be empty',
                                 icon: Icon(
                                   Icons.content_paste_rounded,
                                   color: ColorManager.lightColor,
                                 ),
-                                onTap: () {}),
+                                onTap: () {
+
+                                }),
                             SizedBox(
                               height: 15.0.h,
                             ),
@@ -135,52 +155,30 @@ class EditNote extends StatelessWidget {
                                     press: () {
                                       if (cubit.formKeyEditNote.currentState!
                                           .validate()) {
-                                        if (cubit.colorIndex == null) {
-                                          AwesomeDialog(
-                                                  body: SizedBox(
-                                                    height: 100.h,
-                                                    child: Center(
-                                                      child: Text(
-                                                        'please pick the color of the note',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                            color: ColorManager
-                                                                .txtColor,
-                                                            fontSize: 20.sp),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  context: context,
-                                                  dialogType:
-                                                      DialogType.WARNING)
-                                              .show();
-                                        } else {
-                                          debugPrint('from edit $docId');
+                                        debugPrint('from edit $docId');
 
-                                          cubit.editNote(
-                                              colorId: cubit.colorIndex!,
-                                              noteTime: cubit.currentTimeEdit
-                                                  .toString(),
-                                              noteContent: cubit
-                                                  .contentEditController.text,
-                                              noteDate: cubit.currentDateEdit
-                                                  .toString(),
-                                              userId: FirebaseAuth
-                                                  .instance.currentUser!.uid,
-                                              noteTitle: cubit
-                                                  .titleEditController.text,
-                                              docId: docId);
-                                          debugPrint(docId);
-                                          debugPrint(
-                                              '${FirebaseAuth.instance.currentUser!.uid}');
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const HomeScreen()),
-                                          );
-                                        }
+                                        cubit.editNote(
+                                            colorId: cubit.colorIndex?? noteList[index]['color_id'],
+                                            noteTime: cubit.currentTimeEdit
+                                                .toString(),
+                                            noteContent: cubit
+                                                .content??'no content',
+                                            noteDate: cubit.currentDateEdit
+                                                .toString(),
+                                            userId: FirebaseAuth
+                                                .instance.currentUser!.uid,
+                                            noteTitle:
+                                                cubit.title?? 'no titile',
+                                            docId: docId);
+                                        debugPrint(docId);
+                                        debugPrint(
+                                            '${FirebaseAuth.instance.currentUser!.uid}');
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const HomeScreen()),
+                                        );
                                       }
                                     },
                                     height: 60.h,

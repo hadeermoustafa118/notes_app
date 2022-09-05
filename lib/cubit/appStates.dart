@@ -3,3 +3,6 @@ class InitialState extends AppStates{}
 class LoadingNotesState extends AppStates{}
 class SuccessNotesState extends AppStates{}
 class ErrorNotesState extends AppStates{}
+class LoadingSearchState extends AppStates{}
+class SuccessSearchState extends AppStates{}
+class ErrorSearchState extends AppStates{}

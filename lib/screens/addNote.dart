@@ -132,26 +132,8 @@ class AddNote extends StatelessWidget {
                                     press: () {
                                       if (cubit.formKeyNote.currentState!
                                           .validate()) {
-                                        if(cubit.colorIndex == null){
-                                          AwesomeDialog(
-                                              body: SizedBox(
-                                                height: 100.h,
-                                                child: Center(
-                                                  child: Text(
-                                                    'please pick the color of the note',
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        color: ColorManager.txtColor,
-                                                        fontSize: 20.sp),
-                                                  ),
-                                                ),
-                                              ),
-                                              context: context,
-                                              dialogType: DialogType.WARNING)
-                                              .show();
-                                        }
-                                        else{  cubit.addNote(
-                                            colorId: cubit.colorIndex!,
+                                        cubit.addNote(
+                                            colorId: cubit.colorIndex ?? 2,
                                             noteTime:
                                             cubit.currentTime.toString(),
                                             noteContent:
@@ -172,7 +154,7 @@ class AddNote extends StatelessWidget {
                                         }
 
                                       }
-                                    },
+                                    ,
                                     height: 60.h,
                                     width: 200.w)),
                           ],

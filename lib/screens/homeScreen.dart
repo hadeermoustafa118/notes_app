@@ -10,6 +10,7 @@ import 'package:notes_app/screens/addNote.dart';
 import 'package:notes_app/screens/editNote.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:notes_app/screens/noteDetails.dart';
+import 'package:notes_app/screens/searchScreen.dart';
 import '../main.dart';
 import 'login.dart';
 
@@ -200,11 +201,12 @@ class HomeScreen extends StatelessWidget {
                                                           MaterialPageRoute(
                                                               builder:
                                                                   (context) =>
-                                                                      EditNote(
+                                                                      EditNote(index: index,
                                                                         docId: snapshot
                                                                             .data!
                                                                             .docs[index]
                                                                             .id,
+                                                                        noteList: cubit.notes,
                                                                       )),
                                                         );
                                                       },
@@ -306,7 +308,11 @@ class HomeScreen extends StatelessWidget {
                           width: 14.0.w,
                         ),
                         FloatingActionButton(
-                          onPressed: () {},
+                          onPressed: () {Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SearchScreen()),
+                          );},
                           child: Icon(
                             Icons.search,
                             color: Colors.black,
