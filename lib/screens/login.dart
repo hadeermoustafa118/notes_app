@@ -6,6 +6,7 @@ import 'package:notes_app/screens/homeScreen.dart';
 import 'package:notes_app/screens/signUp.dart';
 import '../components/mainButton.dart';
 import '../components/myTextField.dart';
+import '../constant.dart';
 import '../cubit/appCubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -25,6 +26,7 @@ class Login extends StatelessWidget {
         builder: (context, state) {
           var cubit = AppCubit.get(context);
           return Scaffold(
+            backgroundColor:isDark? ColorManager.dartColor: ColorManager.lightColor,
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -38,22 +40,24 @@ class Login extends StatelessWidget {
                     SizedBox(
                       height: 180.h,
                       width: 300.w,
-                      child: Image.asset('assets/images/images.png'),
+                      child: Image.asset('assets/images/log.png'),
                     ),
                     SizedBox(
                       height: 16.0.h,
                     ),
                     Text("Let's Take Notes",
-                        style: GoogleFonts.pacifico(fontSize: 28.0.sp))
+                        style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
                   ],
                 ),
               ),
             ),
-            bottomSheet: Material(
+            bottomSheet: Container(
+              color: isDark? ColorManager.dartColor: ColorManager.lightColor,
+
               child: Container(
                 height: 450.h,
                 decoration: BoxDecoration(
-                    color: ColorManager.txtColor,
+                    color: isDark? ColorManager.lightColor: ColorManager.dartColor,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40).r,
                         topRight: Radius.circular(40.0.r))),
@@ -69,30 +73,38 @@ class Login extends StatelessWidget {
                         Text(
                           'Login',
                           style:
-                              TextStyle(fontSize: 40.0.sp, color: Colors.white),
+                              TextStyle(fontSize: 40.0.sp, color: isDark? ColorManager.dartColor:ColorManager.lightColor),
                         ),
                         SizedBox(
                           height: 20.0.h,
                         ),
                         MyTextField( submit: (value){},
+                            focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
+                            hintStyle: isDark? ColorManager.disabledColor: ColorManager.lightColor,
                             hint: 'enter your e-mail',
                             controller: cubit.emailForLoginController,
                             validatorText: 'This field can not be empty',
                             icon: Icon(
                               Icons.mail,
-                              color: ColorManager.lightColor,
+                              color: isDark? ColorManager.dartColor:ColorManager.lightColor,
                             ),
                             onTap: () {}),
                         SizedBox(
                           height: 15.0.h,
                         ),
                         MyTextField( submit: (value){},
+                            hintStyle: isDark? ColorManager.disabledColor: ColorManager.lightColor,
+                            focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
                             hint: 'enter your password',
                             controller: cubit.passForLoginController,
                             validatorText: 'This field can not be empty',
                             icon: Icon(
                               Icons.password,
-                              color: ColorManager.lightColor,
+                              color: isDark? ColorManager.dartColor:ColorManager.lightColor,
                             ),
                             onTap: () {}),
                         SizedBox(
@@ -125,7 +137,7 @@ class Login extends StatelessWidget {
                                                 'No user found for that email',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    color: ColorManager.txtColor,
+                                                    color:isDark? ColorManager.txtLight: ColorManager.txtColor,
                                                     fontSize: 20.sp),
                                               ),
                                             ),
@@ -143,7 +155,7 @@ class Login extends StatelessWidget {
                                                 'Wrong password provided for that user.',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    color: ColorManager.txtColor,
+                                                    color:isDark? ColorManager.txtLight: ColorManager.txtColor,
                                                     fontSize: 20.sp),
                                               ),
                                             ),
@@ -165,7 +177,7 @@ class Login extends StatelessWidget {
                           children: [
                             Text(
                               'Do not have an account? ',
-                              style: TextStyle(color: ColorManager.lightColor),
+                              style: TextStyle(color: isDark? ColorManager.dartColor: ColorManager.lightColor),
                             ),
                             TextButton(
                                 onPressed: () {

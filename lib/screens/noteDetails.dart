@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../constant.dart';
 import '../presentation/colorManager.dart';
 
 class NoteDetail extends StatelessWidget {
@@ -11,14 +12,14 @@ final notes;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor:isDark? ColorManager.dartColor: ColorManager.lightColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        shadowColor: Colors.white,
+        backgroundColor:isDark? ColorManager.dartColor: ColorManager.lightColor,
+        shadowColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme:  IconThemeData(color: isDark? ColorManager.lightColor: ColorManager.dartColor),
         systemOverlayStyle:
-            SystemUiOverlayStyle(statusBarColor: Colors.transparent),
+            const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
       ),
       body: SafeArea(
         child: Padding(
@@ -38,66 +39,69 @@ final notes;
               SizedBox(
                 height: 16.0.h,
               ),
-              Text("See More! ", style: GoogleFonts.pacifico(fontSize: 28.0.sp))
+              Text("See More! ", style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
             ],
           ),
         ),
       ),
       bottomSheet: Container(
-        height: 400.h,
-        decoration: BoxDecoration(
-            color: ColorManager.txtColor,
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40).r,
-                topRight: Radius.circular(40.0.r))),
-        child:  Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0).r,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                notes['note_title'],
-                style: TextStyle(
-                    fontSize: 40.sp,
-                    fontWeight: FontWeight.bold,
-                    color: ColorManager.primaryColor),
-              ),
-              SizedBox(
-                height: 10.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    notes['note_date'],
-                    style: TextStyle(
-                        fontSize: 18.sp, color: ColorManager.disabledColor),
-                  ),
-                  SizedBox(
-                    width: 5.0.w,
-                  ),
-                  Text(
-                    notes['note_time'],
-                    style: TextStyle(
-                        fontSize: 18.sp, color: ColorManager.disabledColor),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0.h,
-              ),
-              SingleChildScrollView(
-                child: Text(
-                  notes['note_content'],
+        color: isDark? ColorManager.dartColor: ColorManager.lightColor,
+        child: Container(
+          height: 400.h,
+          decoration: BoxDecoration(
+              color: isDark? ColorManager.lightColor: ColorManager.dartColor,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40).r,
+                  topRight: Radius.circular(40.0.r))),
+          child:  Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 40.0).r,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  notes['note_title'],
                   style: TextStyle(
-                    fontSize: 26.sp,
-                    color: ColorManager.lightColor,
-                    fontWeight: FontWeight.w400,
+                      fontSize: 40.sp,
+                      fontWeight: FontWeight.bold,
+                      color: ColorManager.primaryColor),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      notes['note_date'],
+                      style: TextStyle(
+                          fontSize: 18.sp, color: ColorManager.disabledColor),
+                    ),
+                    SizedBox(
+                      width: 5.0.w,
+                    ),
+                    Text(
+                      notes['note_time'],
+                      style: TextStyle(
+                          fontSize: 18.sp, color: ColorManager.disabledColor),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20.0.h,
+                ),
+                SingleChildScrollView(
+                  child: Text(
+                    notes['note_content'],
+                    style: TextStyle(
+                      fontSize: 26.sp,
+                      color:isDark? ColorManager.dartColor: ColorManager.lightColor,
+                      fontWeight: FontWeight.w400,
 
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

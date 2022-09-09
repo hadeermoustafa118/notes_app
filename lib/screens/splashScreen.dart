@@ -1,9 +1,13 @@
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:notes_app/presentation/colorManager.dart';
 import 'package:notes_app/screens/signUp.dart';
+import 'package:google_fonts/google_fonts.dart';
 
+import '../constant.dart';
 import 'login.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -15,14 +19,12 @@ Widget start;
 
     return AnimatedSplashScreen(
       splash:
-           Image.asset(
-        'assets/images/images.png',
-      ),
+           Text('Notes App', style: GoogleFonts.pacifico(color: isDark?ColorManager.txtLight:ColorManager.txtColor, fontSize: 28.0.sp),),
 
       splashIconSize: 270,
       nextScreen: start,
       splashTransition: SplashTransition.scaleTransition,
-      backgroundColor: ColorManager.lightColor,
+      backgroundColor:isDark? ColorManager.dartColor: ColorManager.lightColor,
       duration: 1000,
       animationDuration: Duration(seconds: 1),
     );

@@ -6,6 +6,7 @@ import 'package:notes_app/cubit/appCubit.dart';
 import 'package:notes_app/cubit/appStates.dart';
 import 'package:notes_app/screens/homeScreen.dart';
 import 'package:notes_app/screens/login.dart';
+import '../constant.dart';
 import '../presentation/colorManager.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,6 +25,8 @@ class SignUp extends StatelessWidget {
         builder: (context, state) {
           var cubit = AppCubit.get(context);
           return Scaffold(
+            backgroundColor:isDark? ColorManager.dartColor: ColorManager.lightColor,
+
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -37,22 +40,23 @@ class SignUp extends StatelessWidget {
                     SizedBox(
                       height: 180.h,
                       width: 300.w,
-                      child: Image.asset('assets/images/images.png'),
+                      child: Image.asset('assets/images/log.png'),
                     ),
                     SizedBox(
                       height: 16.0.h,
                     ),
                     Text("Let's Take Notes",
-                        style: GoogleFonts.pacifico(fontSize: 28.0.sp))
+                        style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
                   ],
                 ),
               ),
             ),
-            bottomSheet: Material(
+            bottomSheet: Container(
+              color: isDark? ColorManager.dartColor: ColorManager.lightColor,
               child: Container(
                 height: 460.h,
                 decoration: BoxDecoration(
-                    color: ColorManager.txtColor,
+                    color: isDark? ColorManager.lightColor: ColorManager.dartColor,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40).r,
                         topRight: Radius.circular(40.0.r))),
@@ -68,42 +72,69 @@ class SignUp extends StatelessWidget {
                         Text(
                           'Sign Up',
                           style:
-                              TextStyle(fontSize: 40.0.sp, color: Colors.white),
+                              TextStyle(fontSize: 40.0.sp, color: isDark? ColorManager.dartColor:ColorManager.lightColor),
                         ),
                         SizedBox(
                           height: 20.0.h,
                         ),
-                        MyTextField( submit: (value){},
+                        MyTextField(
+                            submit: (value) {},
+                            focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
+                            hintStyle: isDark
+                                ? ColorManager.disabledColor
+                                : ColorManager.lightColor,
                             hint: 'enter your username',
                             controller: cubit.usernameController,
                             validatorText: 'This field can not be empty',
                             icon: Icon(
                               Icons.person,
-                              color: ColorManager.lightColor,
+                              color: isDark
+                                  ? ColorManager.dartColor
+                                  : ColorManager.lightColor,
                             ),
                             onTap: () {}),
                         SizedBox(
                           height: 15.0.h,
                         ),
-                        MyTextField( submit: (value){},
+                        MyTextField(
+                            submit: (value) {},
+                            focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
+                            hintStyle: isDark
+                                ? ColorManager.disabledColor
+                                : ColorManager.lightColor,
                             hint: 'enter your e-mail',
                             controller: cubit.emailController,
                             validatorText: 'This field can not be empty',
                             icon: Icon(
                               Icons.mail,
-                              color: ColorManager.lightColor,
+                              color: isDark
+                                  ? ColorManager.dartColor
+                                  : ColorManager.lightColor,
                             ),
                             onTap: () {}),
                         SizedBox(
                           height: 15.0.h,
                         ),
-                        MyTextField( submit: (value){},
+                        MyTextField(
+                            submit: (value) {},
+                            focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
+                            txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
+                            hintStyle: isDark
+                                ? ColorManager.disabledColor
+                                : ColorManager.lightColor,
                             hint: 'enter your password',
                             controller: cubit.passController,
                             validatorText: 'This field can not be empty',
                             icon: Icon(
                               Icons.password,
-                              color: ColorManager.lightColor,
+                              color: isDark
+                                  ? ColorManager.dartColor
+                                  : ColorManager.lightColor,
                             ),
                             onTap: () {}),
                         SizedBox(
@@ -120,7 +151,9 @@ class SignUp extends StatelessWidget {
                                           email: cubit.emailController.text,
                                           password: cubit.passController.text);
                                   debugPrint('$userCredential');
-                                  cubit.addUserData(username: cubit.usernameController.text, mail:  cubit.emailController.text);
+                                  cubit.addUserData(
+                                      username: cubit.usernameController.text,
+                                      mail: cubit.emailController.text);
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
@@ -138,8 +171,9 @@ class SignUp extends StatelessWidget {
                                                 textAlign: TextAlign.center,
                                                 'The password provided is too weak.',
                                                 style: TextStyle(
-                                                    color:
-                                                        ColorManager.txtColor,
+                                                    color: isDark
+                                                        ? ColorManager.txtLight
+                                                        : ColorManager.txtColor,
                                                     fontSize: 20.sp),
                                               ),
                                             ),
@@ -158,8 +192,9 @@ class SignUp extends StatelessWidget {
                                                 'The account already exists for that email.',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                    color:
-                                                        ColorManager.txtColor,
+                                                    color: isDark
+                                                        ? ColorManager.txtLight
+                                                        : ColorManager.txtColor,
                                                     fontSize: 20.sp),
                                               ),
                                             ),
@@ -185,7 +220,10 @@ class SignUp extends StatelessWidget {
                           children: [
                             Text(
                               'Already have an account? ',
-                              style: TextStyle(color: ColorManager.lightColor),
+                              style: TextStyle(
+                                  color: isDark
+                                      ? ColorManager.dartColor
+                                      : ColorManager.lightColor),
                             ),
                             TextButton(
                                 onPressed: () {

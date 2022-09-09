@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/network/casheHelper.dart';
 import 'package:notes_app/screens/login.dart';
 import 'package:notes_app/screens/signUp.dart';
 import 'package:notes_app/screens/splashScreen.dart';
@@ -8,9 +9,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'constant.dart';
+
 CollectionReference notesRef = FirebaseFirestore.instance.collection('flutterNotes');
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  isDark = CashHelper.getData(key: 'mode');
+
   await Firebase.initializeApp();
   var userData = FirebaseAuth.instance.currentUser;
   Widget? widget;

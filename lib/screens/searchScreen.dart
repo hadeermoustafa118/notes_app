@@ -4,6 +4,7 @@ import 'package:notes_app/cubit/appCubit.dart';
 import 'package:notes_app/cubit/appStates.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../constant.dart';
 import '../presentation/colorManager.dart';
 import 'noteDetails.dart';
 
@@ -19,23 +20,24 @@ class SearchScreen extends StatelessWidget {
             builder: (context, state) {
               var cubit = AppCubit.get(context);
               return Scaffold(
+                backgroundColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
                 body: SingleChildScrollView(
                   child: SafeArea(
                     child: Column(
                       children: [
                         MyTextField(
-                          txtColor: Colors.black,
+                          txtColor: isDark? ColorManager.lightColor:ColorManager.dartColor,
                           submit: (text){
                             cubit.searchController.text= text;
                             cubit.searchByTitle();
                           },
-                            enable: Colors.black,
-                            focus: Colors.black,
+                            enable: isDark? ColorManager.lightColor:ColorManager.dartColor,
+                            focus: isDark? ColorManager.lightColor:ColorManager.dartColor,
                             hintStyle: Colors.grey,
                             hint: 'which note you are looking for ?',
                             controller: cubit.searchController,
                             validatorText: 'enter something to search for ',
-                            icon: Icon(Icons.search),
+                            icon: Icon(Icons.search, color: isDark? ColorManager.lightColor:ColorManager.dartColor,),
                             onTap: () {}),
                         if(cubit.notesResult.isNotEmpty)
                           SizedBox(
@@ -139,7 +141,7 @@ class SearchScreen extends StatelessWidget {
                                mainAxisAlignment: MainAxisAlignment.center,
                                crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('No Notes Found', style: TextStyle(color: ColorManager.txtColor, fontSize: 20.sp),),
+                                Text('No Notes Found', style: TextStyle(color: isDark? ColorManager.lightColor:ColorManager.dartColor, fontSize: 20.sp),),
                               ],
                           ),
                            ),

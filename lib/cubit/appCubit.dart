@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:notes_app/presentation/colorManager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../constant.dart';
+import '../network/casheHelper.dart';
 import 'appStates.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -144,23 +146,25 @@ class AppCubit extends Cubit<AppStates> {
       emit(ErrorSearchState());
     });
   }
-List<bool> taby=[false, false , false , false, false, false];
+
+  List<bool> taby = [false, false, false, false, false, false];
   String? title;
   String? content;
   bool tab = false;
   Widget widget = Container();
   void changeTabVale(index) {
-    for(int i =0; i< taby.length;i++){
+    for (int i = 0; i < taby.length; i++) {
       taby[i] = false;
     }
-    taby[index] = !taby[index];    debugPrint('${taby}');
+    taby[index] = !taby[index];
     emit(ChangeTabVale());
   }
 
 // switch mode
-  bool isDark = false;
   void changeMode() {
     isDark = !isDark;
+    CashHelper.saveData(key: 'mode', value: isDark);
+    debugPrint('$isDark');
     emit(ChangeModeState());
   }
 }

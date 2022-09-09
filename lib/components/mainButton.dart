@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../constant.dart';
 import '../presentation/colorManager.dart';
 
 class MainButton extends StatelessWidget {
@@ -32,7 +33,7 @@ class MainButton extends StatelessWidget {
           btnText,
           style: TextStyle(
             fontSize: 17.sp,
-            color: ColorManager.lightColor,
+            color: isDark? ColorManager.lightColor:ColorManager.dartColor,
           ),
         ));
   }

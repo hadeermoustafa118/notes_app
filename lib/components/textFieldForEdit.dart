@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/presentation/colorManager.dart';
+
+import '../constant.dart';
 class TextFieldForEdit extends StatelessWidget {
   const TextFieldForEdit({Key? key  ,this.hint='',
    // required this.controller,
@@ -51,19 +54,20 @@ final String init;
           }
           return null;
         },
-        cursorColor: Colors.grey[200],
+        cursorColor: isDark? ColorManager.dartColor:Colors.grey[200],
         initialValue: init,
         //controller: controller,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color:Colors.white70 ),
+          hintStyle: TextStyle(color: isDark? Colors.black: Colors.white70 ),
           hintText: hint,
-          fillColor: Colors.black54,
+          fillColor: isDark? ColorManager.lightColor:ColorManager.dartColor,
           prefixIcon: icon,
-          focusedBorder: UnderlineInputBorder(borderSide: BorderSide( color: Colors.white70)),
-          enabledBorder: UnderlineInputBorder(borderSide: BorderSide( color:Colors.white70)),
+          prefixIconColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
+          focusedBorder: UnderlineInputBorder(borderSide: BorderSide( color: isDark? ColorManager.dartColor: Colors.white70)),
+          enabledBorder: UnderlineInputBorder(borderSide: BorderSide( color:isDark? ColorManager.dartColor: Colors.white70)),
           contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         ),
-        style: TextStyle(fontSize: 18.0, height: 2.0, color: Colors.white70),
+        style: TextStyle(fontSize: 18.0, height: 2.0, color:isDark? ColorManager.dartColor: Colors.white70),
       ),
     );
   }

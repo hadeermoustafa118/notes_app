@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constant.dart';
+
 
 class MyTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -61,12 +63,12 @@ class MyTextField extends StatelessWidget {
           }
           return null;
         },
-        cursorColor: Colors.grey[200],
+        cursorColor: isDark? Colors.black:Colors.grey[200],
         controller: controller,
         decoration: InputDecoration(
           hintStyle: TextStyle(color: hintStyle),
           hintText: hint,
-          fillColor: Colors.black54,
+          fillColor: isDark? Colors.white:Colors.black54,
           prefixIconColor: Colors.grey,
           prefixIcon: icon,
           focusedBorder:
