@@ -11,10 +11,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'constant.dart';
 
-CollectionReference notesRef = FirebaseFirestore.instance.collection('flutterNotes');
+CollectionReference notesRef =
+    FirebaseFirestore.instance.collection('flutterNotes');
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  isDark = CashHelper.getData(key: 'mode');
+  isDark = CashHelper.getData(key: 'mode')!;
+  debugPrint('$isDark');
 
   await Firebase.initializeApp();
   var userData = FirebaseAuth.instance.currentUser;

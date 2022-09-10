@@ -5,15 +5,15 @@ class CashHelper {
     sharedPreferences = await SharedPreferences.getInstance();
   }
 
-  static Future<bool> saveData(
+  static Future<bool?> saveData(
       {required String key, required dynamic value,}) async {
-     return await sharedPreferences!.setBool(key, value);
+     return await sharedPreferences?.setBool(key, value);
   }
 
 
-  static dynamic getData({
+  static bool? getData({
     required String key,
-  }) {
-    return sharedPreferences!.get(key);
+  }){
+    return sharedPreferences?.getBool(key)??false ;
   }
 }

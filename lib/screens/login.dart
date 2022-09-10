@@ -35,15 +35,16 @@ class Login extends StatelessWidget {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 16.0.h,
+                      height: 30.0.h,
+                    ),
+                        SizedBox(
+                          height: 140.h,
+                          width: 300.w,
+                          child: Image.asset('assets/images/77271.png'),
+
                     ),
                     SizedBox(
-                      height: 180.h,
-                      width: 300.w,
-                      child: Image.asset('assets/images/log.png'),
-                    ),
-                    SizedBox(
-                      height: 16.0.h,
+                      height: 26.0.h,
                     ),
                     Text("Let's Take Notes",
                         style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
@@ -81,7 +82,7 @@ class Login extends StatelessWidget {
                         MyTextField( submit: (value){},
                             focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
                             enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
-                            txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
+                            txtColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
                             hintStyle: isDark? ColorManager.disabledColor: ColorManager.lightColor,
                             hint: 'enter your e-mail',
                             controller: cubit.emailForLoginController,
@@ -98,7 +99,7 @@ class Login extends StatelessWidget {
                             hintStyle: isDark? ColorManager.disabledColor: ColorManager.lightColor,
                             focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
                             enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
-                            txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
+                            txtColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
                             hint: 'enter your password',
                             controller: cubit.passForLoginController,
                             validatorText: 'This field can not be empty',

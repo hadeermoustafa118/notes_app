@@ -43,18 +43,19 @@ class EditNote extends StatelessWidget {
                     child: Column(
                       children: [
                         SizedBox(
-                          height: 5.0.h,
+                          height: 30.0.h,
                         ),
                         SizedBox(
-                          height: 80.h,
+                          height: 140.h,
                           width: 300.w,
-                          child: Image.asset('assets/images/log.png'),
+                          child: Image.asset('assets/images/77271.png'),
+
                         ),
                         SizedBox(
-                          height: 16.0.h,
+                          height: 26.0.h,
                         ),
-                        Text("Edit Your Note! ",
-                            style: GoogleFonts.pacifico(fontSize: 24.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
+                        Text("Let's Take Notes",
+                            style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
                       ],
                     ),
                   ),

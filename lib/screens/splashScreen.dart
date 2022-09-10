@@ -19,7 +19,7 @@ Widget start;
 
     return AnimatedSplashScreen(
       splash:
-           Text('Notes App', style: GoogleFonts.pacifico(color: isDark?ColorManager.txtLight:ColorManager.txtColor, fontSize: 28.0.sp),),
+           Center(child: Text('Notes App', style: GoogleFonts.pacifico(color: isDark?ColorManager.txtLight:ColorManager.txtColor, fontSize: 32.0.sp),)),
 
       splashIconSize: 270,
       nextScreen: start,
