@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../constant.dart';
 import '../presentation/colorManager.dart';
 
@@ -35,6 +35,6 @@ class MainButton extends StatelessWidget {
             fontSize: 17.sp,
             color: isDark? ColorManager.lightColor:ColorManager.dartColor,
           ),
-        ));
+        ).tr(),);
   }
 }

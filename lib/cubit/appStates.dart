@@ -8,3 +8,5 @@ class SuccessSearchState extends AppStates{}
 class ErrorSearchState extends AppStates{}
 class ChangeTabVale extends AppStates{}
 class ChangeModeState extends AppStates{}
+class ArabicState extends AppStates{}
+class EnglishState extends AppStates{}

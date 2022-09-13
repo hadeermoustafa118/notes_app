@@ -10,11 +10,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'constant.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 
 CollectionReference notesRef =
     FirebaseFirestore.instance.collection('flutterNotes');
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   isDark = CashHelper.getData(key: 'mode')!;
   debugPrint('$isDark');
 
@@ -29,8 +33,18 @@ Future<void> main() async {
     isLogin = true;
     widget = HomeScreen();
   }
-  runApp(MyApp(
-    startWidget: widget,
+  runApp(EasyLocalization(
+    path: 'assets/translations',
+    supportedLocales: [
+      Locale('en'),
+      Locale('ar'),
+    ],
+    startLocale: Locale('en'),
+    saveLocale: true,
+    fallbackLocale: Locale('en'),
+    child: MyApp(
+      startWidget: widget,
+    ),
   ));
 }
 
@@ -46,6 +60,9 @@ class MyApp extends StatelessWidget {
       designSize: const Size(411.4, 820.6),
       builder: (context, Widget? child) {
         return MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           debugShowCheckedModeBanner: false,
           home: SplashScreen(
             start: startWidget,

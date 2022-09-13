@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constant.dart';
 import '../network/casheHelper.dart';
 import 'appStates.dart';
+import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -166,5 +168,15 @@ class AppCubit extends Cubit<AppStates> {
     CashHelper.saveData(key: 'mode', value: isDark);
     debugPrint('$isDark');
     emit(ChangeModeState());
+  }
+    //switch language
+
+    void changeLanguageToArabic(BuildContext context){
+      context.setLocale(Locale('ar'));
+      emit(ArabicState());
+    }
+  void changeLanguageToEnglish(BuildContext context){
+    context.setLocale(Locale('en'));
+    emit(EnglishState());
   }
 }

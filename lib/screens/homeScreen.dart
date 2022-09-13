@@ -14,6 +14,8 @@ import 'package:notes_app/screens/searchScreen.dart';
 import '../constant.dart';
 import '../main.dart';
 import 'login.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -30,29 +32,36 @@ class HomeScreen extends StatelessWidget {
                 appBar: AppBar(
                   systemOverlayStyle: const SystemUiOverlayStyle(
                       statusBarColor: Colors.transparent),
-                  title:  Text(
+                  title: Text(
                     'Notes App',
-                    style: TextStyle(color: isDark? Colors.white: Colors.black),
-                  ),
+                    style: GoogleFonts.pacifico(color: isDark?ColorManager.txtLight:ColorManager.txtColor, fontSize: 22.0.sp),),
+
                   centerTitle: true,
                   elevation: 0,
-                  iconTheme:  IconThemeData(color:isDark?Colors.white: Colors.black),
-                  backgroundColor: isDark? ColorManager.dartColor:ColorManager.lightColor,
+                  iconTheme: IconThemeData(
+                      color: isDark ? Colors.white : Colors.black),
+                  backgroundColor:
+                      isDark ? ColorManager.dartColor : ColorManager.lightColor,
                 ),
                 drawer: Drawer(
-                  backgroundColor: isDark? ColorManager.dartColor:ColorManager.lightColor,
+                  backgroundColor:
+                      isDark ? ColorManager.dartColor : ColorManager.lightColor,
                   child: ListView(
                     padding: EdgeInsets.zero,
                     children: [
                       DrawerHeader(
-                        decoration:  BoxDecoration(
-                          color:isDark? ColorManager.dartColor: ColorManager.lightColor,
+                        decoration: BoxDecoration(
+                          color: isDark
+                              ? ColorManager.dartColor
+                              : ColorManager.lightColor,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             CircleAvatar(
-                              backgroundColor: isDark?ColorManager.dartColor: ColorManager.lightColor,
+                              backgroundColor: isDark
+                                  ? ColorManager.dartColor
+                                  : ColorManager.lightColor,
                               radius: 35.0.r,
                               child: Image.asset(
                                 'assets/images/profile.png',
@@ -68,13 +77,16 @@ class HomeScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Welcome Back ! ',
-                                  style: TextStyle(fontSize: 20.sp, color: isDark? ColorManager.txtLight: ColorManager.txtColor),
-                                ),
+                                  'welcome',
+                                  style: TextStyle(
+                                      fontSize: 20.sp,
+                                      color: isDark
+                                          ? ColorManager.txtLight
+                                          : ColorManager.txtColor),
+                                ).tr(),
                                 SizedBox(
                                   height: 8.0.h,
                                 ),
-
                               ],
                             )
                           ],
@@ -86,10 +98,51 @@ class HomeScreen extends StatelessWidget {
                         thickness: 1.0.r,
                       ),
                       ListTile(
-                        title:  Text('Language', style: TextStyle(color: isDark? ColorManager.txtLight:ColorManager.txtColor),),
+                        title: Text(
+                          'lang',
+                          style: TextStyle(
+                              color: isDark
+                                  ? ColorManager.txtLight
+                                  : ColorManager.txtColor),
+                        ).tr(),
                         onTap: () {
-                          // Update the state of the app.
-                          // ...
+                          showDialog(
+                             context: context, builder: (BuildContext context) { return Center(
+                               child: Container(
+                            decoration: BoxDecoration(
+                                color: ColorManager.lightColor,
+                            borderRadius: BorderRadius.all(Radius.circular(12.r))),
+                            height: 200.h,width: 300.w,
+                                 child: Column(
+mainAxisAlignment: MainAxisAlignment.center,                                   children: [
+                                     Text('choose lang', style: TextStyle(color: ColorManager.txtColor, fontSize: 22.sp, decoration: TextDecoration.none),).tr(),
+                                     SizedBox(height: 50.0.h,),
+                                     Row(
+
+                            children: [
+                              SizedBox(width: 25.0.w,),
+                                      MainButton(
+                                          btnText: 'English',
+                                          press: () {
+                                            cubit.changeLanguageToEnglish(context);
+                                          },
+                                          height: 50.h,
+                                          width: 100.w),SizedBox(width: 50.0.w,),
+                                      MainButton(
+
+                                          btnText: 'العربية',
+                                          press: () {
+                                            cubit.changeLanguageToArabic(context);
+                                          },
+                                          height: 50.h,
+                                          width: 100.w),
+                            ],
+                          ),
+                                   ],
+                                 ),
+                               ),
+                             );  },
+                          );
                         },
                       ),
                       Divider(
@@ -98,9 +151,13 @@ class HomeScreen extends StatelessWidget {
                         thickness: 1.0.r,
                       ),
                       ListTile(
-                        title:  Text('Dark Mode', style: TextStyle(color: isDark? ColorManager.txtLight:ColorManager.txtColor)),
+                        title: Text('Mode',
+                            style: TextStyle(
+                                color: isDark
+                                    ? ColorManager.txtLight
+                                    : ColorManager.txtColor)).tr(),
                         onTap: () {
-                         cubit.changeMode();
+                          cubit.changeMode();
                         },
                       ),
                       Divider(
@@ -109,7 +166,11 @@ class HomeScreen extends StatelessWidget {
                         thickness: 1.0.r,
                       ),
                       ListTile(
-                        title:  Text('LogOut', style: TextStyle(color: isDark? ColorManager.txtLight:ColorManager.txtColor)),
+                        title: Text('logout',
+                            style: TextStyle(
+                                color: isDark
+                                    ? ColorManager.txtLight
+                                    : ColorManager.txtColor)).tr(),
                         onTap: () async {
                           await FirebaseAuth.instance.signOut();
                           Navigator.pushReplacement(
@@ -126,7 +187,8 @@ class HomeScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                backgroundColor:isDark? ColorManager.dartColor: ColorManager.lightColor,
+                backgroundColor:
+                    isDark ? ColorManager.dartColor : ColorManager.lightColor,
                 body: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -159,7 +221,9 @@ class HomeScreen extends StatelessWidget {
                                                 BorderRadius.circular(20.0).r),
                                         child: Icon(
                                           Icons.delete_forever,
-                                          color: isDark? ColorManager.dartColor:ColorManager.lightColor,
+                                          color: isDark
+                                              ? ColorManager.dartColor
+                                              : ColorManager.lightColor,
                                         ),
                                       ),
                                       onDismissed: (direction) async {
@@ -234,7 +298,6 @@ class HomeScreen extends StatelessWidget {
                                                         Icons
                                                             .edit_note_outlined,
                                                         size: 28.r,
-
                                                       ))
                                                 ],
                                               ),
@@ -272,8 +335,7 @@ class HomeScreen extends StatelessWidget {
                                                     ['note_content'],
                                                 style: TextStyle(
                                                   fontSize: 18.sp,
-                                                  color:ColorManager
-                                                      .txtColor,
+                                                  color: ColorManager.txtColor,
                                                   fontWeight: FontWeight.w400,
                                                   overflow:
                                                       TextOverflow.ellipsis,
@@ -303,12 +365,15 @@ class HomeScreen extends StatelessWidget {
                 bottomSheet: Material(
                   elevation: 10,
                   child: Container(
-                    color: isDark? ColorManager.dartColor: ColorManager.lightColor,
+                    color: isDark
+                        ? ColorManager.dartColor
+                        : ColorManager.lightColor,
                     child: Container(
                       height: 120.h,
-
                       decoration: BoxDecoration(
-                          color: isDark?ColorManager.lightColor: ColorManager.dartColor,
+                          color: isDark
+                              ? ColorManager.lightColor
+                              : ColorManager.dartColor,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(40).r,
                               topRight: Radius.circular(40.0.r))),
@@ -317,7 +382,7 @@ class HomeScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           MainButton(
-                              btnText: 'Add Note',
+                              btnText: 'add',
                               press: () {
                                 Navigator.push(
                                   context,
@@ -338,10 +403,14 @@ class HomeScreen extends StatelessWidget {
                                     builder: (context) => const SearchScreen()),
                               );
                             },
-                            backgroundColor:isDark? ColorManager.dartColor: ColorManager.lightColor,
+                            backgroundColor: isDark
+                                ? ColorManager.dartColor
+                                : ColorManager.lightColor,
                             child: Icon(
                               Icons.search,
-                              color: isDark? ColorManager.lightColor:ColorManager.dartColor,
+                              color: isDark
+                                  ? ColorManager.lightColor
+                                  : ColorManager.dartColor,
                             ),
                           )
                         ],
