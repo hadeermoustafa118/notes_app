@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../constant.dart';
 
-
 class MyTextField extends StatelessWidget {
   final TextEditingController controller;
   final String validatorText;
@@ -37,8 +36,8 @@ class MyTextField extends StatelessWidget {
       this.margin = 10.0,
       this.enable = Colors.white70,
       this.focus = Colors.white70,
-        required this.submit,
-        this.txtColor = Colors.white70,
+      required this.submit,
+      this.txtColor = Colors.white70,
       this.hintStyle = Colors.white70})
       : super(key: key);
 
@@ -48,7 +47,6 @@ class MyTextField extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: margin),
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: TextFormField(
-
         autofocus: autofocus,
         onTap: onTap as Function(),
         minLines: isMulti ? 4 : 1,
@@ -63,12 +61,12 @@ class MyTextField extends StatelessWidget {
           }
           return null;
         },
-        cursorColor: isDark? Colors.black:Colors.grey[200],
+        cursorColor: isDark ? Colors.black : Colors.grey[200],
         controller: controller,
         decoration: InputDecoration(
           hintStyle: TextStyle(color: hintStyle),
           hintText: hint,
-          fillColor: isDark? Colors.white:Colors.black54,
+          fillColor: isDark ? Colors.white : Colors.black54,
           prefixIconColor: Colors.grey,
           prefixIcon: icon,
           focusedBorder:

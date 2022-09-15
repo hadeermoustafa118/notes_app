@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SignUp extends StatelessWidget {
   SignUp({Key? key}) : super(key: key);
@@ -71,10 +72,10 @@ class SignUp extends StatelessWidget {
                           height: 16.0.h,
                         ),
                         Text(
-                          'Sign Up',
+                          'sign',
                           style:
                               TextStyle(fontSize: 40.0.sp, color: isDark? ColorManager.dartColor:ColorManager.lightColor),
-                        ),
+                        ).tr(),
                         SizedBox(
                           height: 20.0.h,
                         ),
@@ -86,9 +87,9 @@ class SignUp extends StatelessWidget {
                             hintStyle: isDark
                                 ? ColorManager.disabledColor
                                 : ColorManager.lightColor,
-                            hint: 'enter your username',
+                            hint: 'username'.tr(),
                             controller: cubit.usernameController,
-                            validatorText: 'This field can not be empty',
+                            validatorText: 'validate'..tr(),
                             icon: Icon(
                               Icons.person,
                               color: isDark
@@ -107,9 +108,9 @@ class SignUp extends StatelessWidget {
                             hintStyle: isDark
                                 ? ColorManager.disabledColor
                                 : ColorManager.lightColor,
-                            hint: 'enter your e-mail',
+                            hint: 'email'.tr(),
                             controller: cubit.emailController,
-                            validatorText: 'This field can not be empty',
+                            validatorText: 'validate'.tr(),
                             icon: Icon(
                               Icons.mail,
                               color: isDark
@@ -128,9 +129,9 @@ class SignUp extends StatelessWidget {
                             hintStyle: isDark
                                 ? ColorManager.disabledColor
                                 : ColorManager.lightColor,
-                            hint: 'enter your password',
+                            hint: 'pass'.tr(),
                             controller: cubit.passController,
-                            validatorText: 'This field can not be empty',
+                            validatorText: 'validate'.tr(),
                             icon: Icon(
                               Icons.password,
                               color: isDark
@@ -142,7 +143,7 @@ class SignUp extends StatelessWidget {
                           height: 20.0.h,
                         ),
                         MainButton(
-                            btnText: 'Sign Up',
+                            btnText: 'sign',
                             press: () async {
                               try {
                                 if (cubit.formKeySign.currentState!
@@ -170,13 +171,13 @@ class SignUp extends StatelessWidget {
                                             child: Center(
                                               child: Text(
                                                 textAlign: TextAlign.center,
-                                                'The password provided is too weak.',
+                                                'weak pass',
                                                 style: TextStyle(
                                                     color: isDark
                                                         ? ColorManager.txtLight
                                                         : ColorManager.txtColor,
                                                     fontSize: 20.sp),
-                                              ),
+                                              ).tr(),
                                             ),
                                           ),
                                           context: context,
@@ -190,14 +191,14 @@ class SignUp extends StatelessWidget {
                                             height: 100.h,
                                             child: Center(
                                               child: Text(
-                                                'The account already exists for that email.',
+                                                'mail in use',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color: isDark
                                                         ? ColorManager.txtLight
                                                         : ColorManager.txtColor,
                                                     fontSize: 20.sp),
-                                              ),
+                                              ).tr(),
                                             ),
                                           ),
                                           context: context,
@@ -220,12 +221,12 @@ class SignUp extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Already have an account? ',
+                              'have account',
                               style: TextStyle(
                                   color: isDark
                                       ? ColorManager.dartColor
                                       : ColorManager.lightColor),
-                            ),
+                            ).tr(),
                             TextButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -235,11 +236,11 @@ class SignUp extends StatelessWidget {
                                   );
                                 },
                                 child: Text(
-                                  'Login',
+                                  'login',
                                   style: TextStyle(
                                       color: ColorManager.primaryColor,
-                                      fontSize: 16.sp),
-                                )),
+                                      fontSize: 16.sp)
+                                ).tr(),),
                           ],
                         )
                       ],

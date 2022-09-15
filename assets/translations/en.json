@@ -7,5 +7,25 @@
   "welcome": "Welcome Back !",
   "add":"Add Note",
   "app name": "Notes App",
-  "choose lang": "Choose Language"
+  "choose lang": "Choose Language",
+        "sign":"Sign Up",
+  "validate":"This field can not be empty",
+  "username":"enter your username",
+  "email": "enter your e-mail",
+  "pass": "enter your password",
+  "weak pass": "The password provided is too weak.",
+  "mail in use": "The account already exists for that email.",
+  "have not account": "Already have an account? ",
+  "wrong pass": "Wrong password provided for that user.",
+  "have account": "Do not have an account? ",
+  "no user": "No user found for that email",
+  "details": "See More!",
+  "title": "Note Title",
+  "content": "Note Content","color": "Pick Colour","done": "Add",
+  "save": "Save",
+  "take note": "Let's Take Notes",
+  "no data": "No Notes Found",
+  "search": "which note you are looking for?",
+  "search validate": "enter something to search for..."
+
 }

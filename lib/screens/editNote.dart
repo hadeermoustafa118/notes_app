@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../components/circleColor.dart';
 import '../components/fieldTitle.dart';
 import '../components/mainButton.dart';
@@ -40,23 +40,23 @@ class EditNote extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                       horizontal: 50.0,
                     ).r,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 30.0.h,
-                        ),
-                        SizedBox(
-                          height: 140.h,
-                          width: 300.w,
-                          child: Image.asset('assets/images/77271.png'),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10.0.h,
+                          ),
+                          SizedBox(
+                            height: 100.h,
+                            width: 150.w,
+                            child: Image.asset('assets/images/77271.png'),
 
-                        ),
-                        SizedBox(
-                          height: 26.0.h,
-                        ),
-                        Text("Let's Take Notes",
-                            style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
-                      ],
+                          ),
+SizedBox(height: 10.0.h,),
+                          Text("take note",
+                              style: GoogleFonts.pacifico(fontSize: 24.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor)).tr()
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -81,8 +81,8 @@ class EditNote extends StatelessWidget {
                               SizedBox(
                                 height: 40.0.h,
                               ),
-                              const FieldTitle(
-                                text: 'Note Title',
+                               FieldTitle(
+                                text: 'title',
                               ),
                               TextFieldForEdit(
                                   save: (text) {
@@ -90,7 +90,7 @@ class EditNote extends StatelessWidget {
                                   },
                                   hint: '',
                                   init: '${noteList[index]['note_title']}',
-                                  validatorText: 'This field can not be empty',
+                                  validatorText: 'validate'.tr(),
                                   icon: Icon(
                                     Icons.title,
                                     color: isDark? ColorManager.dartColor:ColorManager.lightColor,
@@ -99,8 +99,8 @@ class EditNote extends StatelessWidget {
                               SizedBox(
                                 height: 15.0.h,
                               ),
-                              const FieldTitle(
-                                text: 'Note Content',
+                               FieldTitle(
+                                text: 'content',
                               ),
                               TextFieldForEdit(
                                   init: '${noteList[index]['note_content']}',
@@ -108,7 +108,7 @@ class EditNote extends StatelessWidget {
                                   save: (text) {
                                     cubit.content = text!;
                                   },
-                                  validatorText: 'This field can not be empty',
+                                  validatorText: 'validate'.tr(),
                                   icon: Icon(
                                     Icons.content_paste_rounded,
                                     color: isDark? ColorManager.dartColor:ColorManager.lightColor,
@@ -117,7 +117,7 @@ class EditNote extends StatelessWidget {
                               SizedBox(
                                 height: 15.0.h,
                               ),
-                              const FieldTitle(text: 'Pick Colour'),
+                               FieldTitle(text: 'color'),
                               SizedBox(
                                 height: 10.0.h,
                               ),
@@ -153,7 +153,7 @@ class EditNote extends StatelessWidget {
                               ),
                               Center(
                                   child: MainButton(
-                                      btnText: 'Save',
+                                      btnText: 'save',
                                       press: () {
                                         if (cubit.formKeyEditNote.currentState!
                                             .validate()) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../constant.dart';
 import '../presentation/colorManager.dart';
 
@@ -39,7 +39,7 @@ final notes;
               SizedBox(
                 height: 16.0.h,
               ),
-              Text("See More! ", style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
+              Text("See More!", style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
             ],
           ),
         ),

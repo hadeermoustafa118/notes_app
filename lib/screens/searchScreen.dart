@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../constant.dart';
 import '../presentation/colorManager.dart';
 import 'noteDetails.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
@@ -34,9 +34,9 @@ class SearchScreen extends StatelessWidget {
                             enable: isDark? ColorManager.lightColor:ColorManager.dartColor,
                             focus: isDark? ColorManager.lightColor:ColorManager.dartColor,
                             hintStyle: Colors.grey,
-                            hint: 'which note you are looking for ?',
+                            hint: 'search'.tr(),
                             controller: cubit.searchController,
-                            validatorText: 'enter something to search for ',
+                            validatorText: 'search validate'.tr(),
                             icon: Icon(Icons.search, color: isDark? ColorManager.lightColor:ColorManager.dartColor,),
                             onTap: () {}),
                         if(cubit.notesResult.isNotEmpty)
@@ -141,7 +141,7 @@ class SearchScreen extends StatelessWidget {
                                mainAxisAlignment: MainAxisAlignment.center,
                                crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text('No Notes Found', style: TextStyle(color: isDark? ColorManager.lightColor:ColorManager.dartColor, fontSize: 20.sp),),
+                                Text('no data', style: TextStyle(color: isDark? ColorManager.lightColor:ColorManager.dartColor, fontSize: 20.sp),).tr(),
                               ],
                           ),
                            ),
@@ -153,124 +153,3 @@ class SearchScreen extends StatelessWidget {
             }));
   }
 }
-
-// class search extends SearchDelegate {
-//   @override
-//   List<Widget>? buildActions(BuildContext context) {
-//     return [
-//       IconButton(
-//         icon: Icon(Icons.clear),
-//         onPressed: () {
-//           query = '';
-//         },
-//       )
-//     ];
-//   }
-//
-//   @override
-//   Widget? buildLeading(BuildContext context) {
-//     return Icon(Icons.search);
-//   }
-//
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     return Text('data');
-//   }
-//
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     return BlocProvider(
-//         create: (BuildContext context) => AppCubit()..searchByTitle(),
-//         child: BlocConsumer<AppCubit, AppStates>(
-//             listener: (context, state) {},
-//             builder: (context, state) {
-//               var cubit = AppCubit.get(context);
-//               return FutureBuilder(
-//                 future: notesRef
-//                     .where("user_id",
-//                         isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-//                     .get(),
-//                 builder: (context, snapshot) {
-//                   return ListView.builder(
-//                     itemBuilder: (context, index) {
-//                       return cubit.searchController.text.toLowerCase() ==
-//                               cubit.notes[index]['note_title']
-//                                   .toString()
-//                                   .toLowerCase()
-//                           ? InkWell(
-//                               onTap: () {
-//                                 Navigator.push(
-//                                   context,
-//                                   MaterialPageRoute(
-//                                       builder: (context) => NoteDetail(
-//                                             notes: cubit.notesResult[index],
-//                                           )),
-//                                 );
-//                               },
-//                               child: Container(
-//                                 padding: const EdgeInsets.all(16.0).r,
-//                                 margin: const EdgeInsets.all(12.0).r,
-//                                 decoration: BoxDecoration(
-//                                     color: ColorManager.cardColors[
-//                                         cubit.notesResult[index]['color_id']],
-//                                     borderRadius:
-//                                         BorderRadius.circular(20.0).r),
-//                                 child: Column(
-//                                   crossAxisAlignment: CrossAxisAlignment.start,
-//                                   children: [
-//                                     Text(
-//                                       cubit.notesResult[index]['note_title'],
-//                                       style: TextStyle(
-//                                           fontSize: 24.sp,
-//                                           color: ColorManager.txtColor,
-//                                           fontWeight: FontWeight.w500),
-//                                       maxLines: 1,
-//                                     ),
-//                                     SizedBox(
-//                                       height: 8.0.h,
-//                                     ),
-//                                     Row(
-//                                       children: [
-//                                         Text(
-//                                           cubit.notesResult[index]['note_date'],
-//                                           style: TextStyle(
-//                                               fontSize: 14.sp,
-//                                               color: ColorManager.txtColor),
-//                                         ),
-//                                         SizedBox(
-//                                           width: 5.0.w,
-//                                         ),
-//                                         Text(
-//                                           cubit.notesResult[index]['note_time'],
-//                                           style: TextStyle(
-//                                               fontSize: 14.sp,
-//                                               color: ColorManager.txtColor),
-//                                         ),
-//                                       ],
-//                                     ),
-//                                     SizedBox(
-//                                       height: 12.0.h,
-//                                     ),
-//                                     Text(
-//                                       cubit.notesResult[index]['note_content'],
-//                                       style: TextStyle(
-//                                         fontSize: 18.sp,
-//                                         color: ColorManager.txtColor,
-//                                         fontWeight: FontWeight.w400,
-//                                         overflow: TextOverflow.ellipsis,
-//                                       ),
-//                                       maxLines: 1,
-//                                     ),
-//                                   ],
-//                                 ),
-//                               ),
-//                             )
-//                           : Text('no data');
-//                     },
-//                     itemCount: cubit.notesResult.length,
-//                   );
-//                 },
-//               );
-//             }));
-//   }
-// }

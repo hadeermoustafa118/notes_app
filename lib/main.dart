@@ -3,6 +3,7 @@ import 'package:notes_app/network/casheHelper.dart';
 import 'package:notes_app/screens/login.dart';
 import 'package:notes_app/screens/signUp.dart';
 import 'package:notes_app/screens/splashScreen.dart';
+import 'package:notes_app/themes.dart';
 import '../screens/homeScreen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -18,8 +19,8 @@ CollectionReference notesRef =
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-
-  isDark = CashHelper.getData(key: 'mode')!;
+await CashHelper.init();
+  isDark = CashHelper.getData(key: 'isDark')??false;
   debugPrint('$isDark');
 
   await Firebase.initializeApp();
@@ -60,6 +61,10 @@ class MyApp extends StatelessWidget {
       designSize: const Size(411.4, 820.6),
       builder: (context, Widget? child) {
         return MaterialApp(
+          darkTheme: dark,
+          theme: light,
+
+          themeMode: isDark? ThemeMode.light :ThemeMode.dark,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
           locale: context.locale,

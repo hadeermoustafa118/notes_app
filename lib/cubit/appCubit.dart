@@ -163,11 +163,10 @@ class AppCubit extends Cubit<AppStates> {
   }
 
 // switch mode
-  void changeMode() {
+  void changeModeApp() {
     isDark = !isDark;
-    CashHelper.saveData(key: 'mode', value: isDark);
-    debugPrint('$isDark');
-    emit(ChangeModeState());
+    CashHelper.saveData(key: 'isDark', value: isDark)
+        .then((value) => {emit(ChangeModeState())});
   }
     //switch language
 

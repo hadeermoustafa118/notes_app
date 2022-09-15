@@ -14,6 +14,6 @@ class CashHelper {
   static bool? getData({
     required String key,
   }){
-    return sharedPreferences?.getBool(key)??false ;
+    return sharedPreferences?.getBool(key) ;
   }
 }

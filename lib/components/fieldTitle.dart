@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 import '../constant.dart';
 import '../presentation/colorManager.dart';
 
@@ -16,7 +16,7 @@ final String text;
         textAlign: TextAlign.start,
         style:
         TextStyle(fontSize: 18.sp, color: isDark? ColorManager.txtColor:ColorManager.txtLight),
-      ),
+      ).tr(),
     );
   }
 }

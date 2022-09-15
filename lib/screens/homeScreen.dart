@@ -34,8 +34,12 @@ class HomeScreen extends StatelessWidget {
                       statusBarColor: Colors.transparent),
                   title: Text(
                     'Notes App',
-                    style: GoogleFonts.pacifico(color: isDark?ColorManager.txtLight:ColorManager.txtColor, fontSize: 22.0.sp),),
-
+                    style: GoogleFonts.pacifico(
+                        color: isDark
+                            ? ColorManager.txtLight
+                            : ColorManager.txtColor,
+                        fontSize: 22.0.sp),
+                  ),
                   centerTitle: true,
                   elevation: 0,
                   iconTheme: IconThemeData(
@@ -107,41 +111,60 @@ class HomeScreen extends StatelessWidget {
                         ).tr(),
                         onTap: () {
                           showDialog(
-                             context: context, builder: (BuildContext context) { return Center(
-                               child: Container(
-                            decoration: BoxDecoration(
-                                color: ColorManager.lightColor,
-                            borderRadius: BorderRadius.all(Radius.circular(12.r))),
-                            height: 200.h,width: 300.w,
-                                 child: Column(
-mainAxisAlignment: MainAxisAlignment.center,                                   children: [
-                                     Text('choose lang', style: TextStyle(color: ColorManager.txtColor, fontSize: 22.sp, decoration: TextDecoration.none),).tr(),
-                                     SizedBox(height: 50.0.h,),
-                                     Row(
-
-                            children: [
-                              SizedBox(width: 25.0.w,),
-                                      MainButton(
-                                          btnText: 'English',
-                                          press: () {
-                                            cubit.changeLanguageToEnglish(context);
-                                          },
-                                          height: 50.h,
-                                          width: 100.w),SizedBox(width: 50.0.w,),
-                                      MainButton(
-
-                                          btnText: 'العربية',
-                                          press: () {
-                                            cubit.changeLanguageToArabic(context);
-                                          },
-                                          height: 50.h,
-                                          width: 100.w),
-                            ],
-                          ),
-                                   ],
-                                 ),
-                               ),
-                             );  },
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Center(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: isDark? ColorManager.dartColor:ColorManager.lightColor,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(12.r))),
+                                  height: 200.h,
+                                  width: 300.w,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'choose lang',
+                                        style: TextStyle(
+                                            color:isDark?  ColorManager.txtLight:ColorManager.txtColor,
+                                            fontSize: 22.sp,
+                                            decoration: TextDecoration.none),
+                                      ).tr(),
+                                      SizedBox(
+                                        height: 50.0.h,
+                                      ),
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 25.0.w,
+                                          ),
+                                          MainButton(
+                                              btnText: 'English',
+                                              press: () {
+                                                cubit.changeLanguageToEnglish(
+                                                    context);
+                                              },
+                                              height: 50.h,
+                                              width: 100.w),
+                                          SizedBox(
+                                            width: 50.0.w,
+                                          ),
+                                          MainButton(
+                                              btnText: 'العربية',
+                                              press: () {
+                                                cubit.changeLanguageToArabic(
+                                                    context);
+                                              },
+                                              height: 50.h,
+                                              width: 100.w),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
                           );
                         },
                       ),
@@ -152,12 +175,13 @@ mainAxisAlignment: MainAxisAlignment.center,                                   c
                       ),
                       ListTile(
                         title: Text('Mode',
-                            style: TextStyle(
-                                color: isDark
-                                    ? ColorManager.txtLight
-                                    : ColorManager.txtColor)).tr(),
+                                style: TextStyle(
+                                    color: isDark
+                                        ? ColorManager.txtLight
+                                        : ColorManager.txtColor))
+                            .tr(),
                         onTap: () {
-                          cubit.changeMode();
+                          cubit.changeModeApp();
                         },
                       ),
                       Divider(
@@ -167,10 +191,11 @@ mainAxisAlignment: MainAxisAlignment.center,                                   c
                       ),
                       ListTile(
                         title: Text('logout',
-                            style: TextStyle(
-                                color: isDark
-                                    ? ColorManager.txtLight
-                                    : ColorManager.txtColor)).tr(),
+                                style: TextStyle(
+                                    color: isDark
+                                        ? ColorManager.txtLight
+                                        : ColorManager.txtColor))
+                            .tr(),
                         onTap: () async {
                           await FirebaseAuth.instance.signOut();
                           Navigator.pushReplacement(
@@ -296,8 +321,8 @@ mainAxisAlignment: MainAxisAlignment.center,                                   c
                                                       },
                                                       icon: Icon(
                                                         Icons
-                                                            .edit_note_outlined,
-                                                        size: 28.r,
+                                                            .edit_note_outlined,color: ColorManager.dartColor,
+
                                                       ))
                                                 ],
                                               ),

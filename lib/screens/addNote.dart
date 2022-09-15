@@ -12,7 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../presentation/colorManager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 class AddNote extends StatelessWidget {
   const AddNote({Key? key}) : super(key: key);
 
@@ -31,23 +31,23 @@ class AddNote extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                       horizontal: 50.0,
                     ).r,
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 30.0.h,
-                        ),
-                        SizedBox(
-                          height: 140.h,
-                          width: 300.w,
-                          child: Image.asset('assets/images/77271.png'),
+                    child: Center(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 10.0.h,
+                          ),
+                          SizedBox(
+                            height: 100.h,
+                            width: 150.w,
+                            child: Image.asset('assets/images/77271.png'),
 
-                        ),
-                        SizedBox(
-                          height: 26.0.h,
-                        ),
-                        Text("Let's Take Notes",
-                            style: GoogleFonts.pacifico(fontSize: 28.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor))
-                      ],
+                          ),
+                          SizedBox(height: 10.0.h,),
+                          Text("take note",
+                              style: GoogleFonts.pacifico(fontSize: 24.0.sp,color: isDark?ColorManager.txtLight:ColorManager.txtColor)).tr()
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -71,8 +71,8 @@ class AddNote extends StatelessWidget {
                               SizedBox(
                                 height: 40.0.h,
                               ),
-                              const FieldTitle(
-                                text: 'Note Title',
+                               FieldTitle(
+                                text: 'title',
                               ),
                               MyTextField(
                                 focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
@@ -81,7 +81,7 @@ class AddNote extends StatelessWidget {
                                   submit: (value) {},
                                   hint: '',
                                   controller: cubit.titleController,
-                                  validatorText: 'This field can not be empty',
+                                  validatorText: 'validate'.tr(),
                                   icon: Icon(
                                     Icons.title,
                                     color: isDark? ColorManager.dartColor:ColorManager.lightColor,
@@ -90,8 +90,8 @@ class AddNote extends StatelessWidget {
                               SizedBox(
                                 height: 15.0.h,
                               ),
-                              const FieldTitle(
-                                text: 'Note Content',
+                               FieldTitle(
+                                text: 'content',
                               ),
                               MyTextField(       focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
                                   enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
@@ -99,7 +99,7 @@ class AddNote extends StatelessWidget {
                                   submit: (value) {},
                                   hint: '',
                                   controller: cubit.contentController,
-                                  validatorText: 'This field can not be empty',
+                                  validatorText: 'validate'.tr(),
                                   icon: Icon(
                                     Icons.content_paste_rounded,
                                     color:isDark? ColorManager.dartColor:ColorManager.lightColor,
@@ -108,7 +108,7 @@ class AddNote extends StatelessWidget {
                               SizedBox(
                                 height: 15.0.h,
                               ),
-                              const FieldTitle(text: 'Pick Colour'),
+                               FieldTitle(text: 'color'),
                               SizedBox(
                                 height: 10.0.h,
                               ),
@@ -142,7 +142,7 @@ class AddNote extends StatelessWidget {
                               ),
                               Center(
                                   child: MainButton(
-                                      btnText: 'Add',
+                                      btnText: 'done',
                                       press: () {
                                         if (cubit.formKeyNote.currentState!
                                             .validate()) {

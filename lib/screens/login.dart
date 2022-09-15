@@ -13,7 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../cubit/appStates.dart';
 import '../presentation/colorManager.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-
+import 'package:easy_localization/easy_localization.dart';
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
   UserCredential? userCredential;
@@ -72,10 +72,10 @@ class Login extends StatelessWidget {
                           height: 16.0.h,
                         ),
                         Text(
-                          'Login',
+                          'login',
                           style:
                               TextStyle(fontSize: 40.0.sp, color: isDark? ColorManager.dartColor:ColorManager.lightColor),
-                        ),
+                        ).tr(),
                         SizedBox(
                           height: 20.0.h,
                         ),
@@ -84,9 +84,9 @@ class Login extends StatelessWidget {
                             enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
                             txtColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
                             hintStyle: isDark? ColorManager.disabledColor: ColorManager.lightColor,
-                            hint: 'enter your e-mail',
+                            hint: 'email'.tr(),
                             controller: cubit.emailForLoginController,
-                            validatorText: 'This field can not be empty',
+                            validatorText: 'validate'.tr(),
                             icon: Icon(
                               Icons.mail,
                               color: isDark? ColorManager.dartColor:ColorManager.lightColor,
@@ -100,9 +100,9 @@ class Login extends StatelessWidget {
                             focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
                             enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
                             txtColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
-                            hint: 'enter your password',
+                            hint: 'pass'.tr(),
                             controller: cubit.passForLoginController,
-                            validatorText: 'This field can not be empty',
+                            validatorText: 'validate'.tr(),
                             icon: Icon(
                               Icons.password,
                               color: isDark? ColorManager.dartColor:ColorManager.lightColor,
@@ -112,7 +112,7 @@ class Login extends StatelessWidget {
                           height: 20.0.h,
                         ),
                         MainButton(
-                            btnText: 'Login',
+                            btnText: 'login',
                             press: () async {
                               try {
                                 if (cubit.formKeyLogin.currentState!.validate()) {
@@ -135,12 +135,12 @@ class Login extends StatelessWidget {
                                             height: 100.h,
                                             child: Center(
                                               child: Text(
-                                                'No user found for that email',
+                                                'no user',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color:isDark? ColorManager.txtLight: ColorManager.txtColor,
                                                     fontSize: 20.sp),
-                                              ),
+                                              ).tr(),
                                             ),
                                           ),
                                           context: context,
@@ -153,12 +153,12 @@ class Login extends StatelessWidget {
                                             height: 100.h,
                                             child: Center(
                                               child: Text(
-                                                'Wrong password provided for that user.',
+                                                'wrong pass',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                     color:isDark? ColorManager.txtLight: ColorManager.txtColor,
                                                     fontSize: 20.sp),
-                                              ),
+                                              ).tr(),
                                             ),
                                           ),
                                           context: context,
@@ -177,9 +177,9 @@ class Login extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Do not have an account? ',
+                              'have not account',
                               style: TextStyle(color: isDark? ColorManager.dartColor: ColorManager.lightColor),
-                            ),
+                            ).tr(),
                             TextButton(
                                 onPressed: () {
                                   Navigator.push(
@@ -189,11 +189,11 @@ class Login extends StatelessWidget {
                                   );
                                 },
                                 child: Text(
-                                  'Sign Up',
+                                  'sign',
                                   style: TextStyle(
                                       color: ColorManager.primaryColor,
                                       fontSize: 16.sp),
-                                )),
+                                ).tr()),
                           ],
                         )
                       ],
