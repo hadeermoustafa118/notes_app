@@ -89,7 +89,7 @@ class SignUp extends StatelessWidget {
                                 : ColorManager.lightColor,
                             hint: 'username'.tr(),
                             controller: cubit.usernameController,
-                            validatorText: 'validate'..tr(),
+                            validatorText: 'validate'.tr(),
                             icon: Icon(
                               Icons.person,
                               color: isDark

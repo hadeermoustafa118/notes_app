@@ -77,7 +77,7 @@ class AddNote extends StatelessWidget {
                               MyTextField(
                                 focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
                                   enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
-                                  txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
+                                  txtColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
                                   submit: (value) {},
                                   hint: '',
                                   controller: cubit.titleController,
@@ -95,7 +95,7 @@ class AddNote extends StatelessWidget {
                               ),
                               MyTextField(       focus:isDark? ColorManager.dartColor: ColorManager.lightColor ,
                                   enable: isDark? ColorManager.dartColor: ColorManager.lightColor ,
-                                  txtColor: isDark? ColorManager.dartColor: ColorManager.txtColor,
+                                  txtColor: isDark? ColorManager.dartColor: ColorManager.lightColor,
                                   submit: (value) {},
                                   hint: '',
                                   controller: cubit.contentController,
